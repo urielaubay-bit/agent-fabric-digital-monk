@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import HeroSection from './components/HeroSection';
+import Header from './components/Header/Header';
 
 function App() {
   return (
     <div className="App">
-      <HeroSection />
+      <Header />
       {/* Add other components here */}
     </div>
   );
