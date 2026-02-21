@@ -1,12 +1,19 @@
 import React from 'react';
+import ContactForm from './components/ContactForm';
 import './App.css';
-import Header from './components/Header/Header';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      {/* Add other components here */}
+      <header className="App-header">
+        <h1>Welcome to Our Website</h1>
+      </header>
+      <main>
+        <ContactForm />
+      </main>
+      <footer>
+        <p>&copy; 2023 Our Company. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
