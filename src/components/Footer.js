@@ -1,29 +1,28 @@
 import React from 'react';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-section">
-          <h3>Contact Us</h3>
-          <p>Email: info@digitalmonk.com</p>
-          <p>Phone: +1 (555) 123-4567</p>
-          <p>Address: 123 Tech Street, San Francisco, CA 94105</p>
-        </div>
-        <div className="footer-section">
-          <h3>Follow Us</h3>
+      <div className="container">
+        <div className="footer-content">
+          <p>&copy; 2023 Digital Monk. All rights reserved.</p>
           <div className="social-links">
-            <a href="https://twitter.com/digitalmonk" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <a href="https://facebook.com/digitalmonk" target="_blank" rel="noopener noreferrer">Facebook</a>
-            <a href="https://linkedin.com/company/digitalmonk" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://facebook.com/digitalmonk" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <FaFacebook />
+            </a>
+            <a href="https://twitter.com/digitalmonk" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <FaTwitter />
+            </a>
+            <a href="https://instagram.com/digitalmonk" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <FaInstagram />
+            </a>
+            <a href="https://linkedin.com/company/digitalmonk" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <FaLinkedin />
+            </a>
           </div>
         </div>
-      </div>
-      <div className="footer-bottom">
-        <p>&copy; {currentYear} Digital Monk. All rights reserved.</p>
       </div>
     </footer>
   );

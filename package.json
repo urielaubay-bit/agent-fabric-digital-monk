@@ -1,27 +1,35 @@
 {
-  "name": "agent-fabric-digital-monk",
+  "name": "digital-monk-website",
   "version": "1.0.0",
-  "description": "Agent Fabric Digital Monk project",
-  "main": "js/main.js",
+  "private": true,
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-scripts": "4.0.3"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/urielaubay-bit/agent-fabric-digital-monk.git"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
-  "keywords": [
-    "agent",
-    "fabric",
-    "digital",
-    "monk"
-  ],
-  "author": "Your Name",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/urielaubay-bit/agent-fabric-digital-monk/issues"
-  },
-  "homepage": "https://github.com/urielaubay-bit/agent-fabric-digital-monk#readme",
-  "dependencies": {},
-  "devDependencies": {}
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
