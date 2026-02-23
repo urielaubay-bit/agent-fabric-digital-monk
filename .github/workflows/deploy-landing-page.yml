@@ -1,0 +1,184 @@
+name: Deploy Landing Page to S3
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'landing-page/**'
+      - 'public/**'
+      - 'dist/**'
+      - 'build/**'
+      - 'index.html'
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID (UUID)'
+        required: true
+        type: string
+
+env:
+  AWS_REGION: us-east-1
+  S3_BUCKET: agent-fabric-data-vault-439712476071
+  CLOUDFRONT_DISTRIBUTION_ID: E1D7IHJAT40PYQ
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      
+      - name: Detect project ID
+        id: project
+        run: |
+          # Try to get project ID from workflow input
+          if [ -n "${{ github.event.inputs.project_id }}" ]; then
+            PROJECT_ID="${{ github.event.inputs.project_id }}"
+          else
+            # Try to get from repository name or context.json
+            if [ -f "context.json" ]; then
+              PROJECT_ID=$(jq -r '.project_id // empty' context.json)
+            fi
+            
+            # If still not found, try to extract from S3 by repo name
+            if [ -z "$PROJECT_ID" ]; then
+              REPO_NAME="${{ github.event.repository.name }}"
+              echo "Searching for project with repo name: $REPO_NAME"
+              # This would need to query S3 to find the project
+              # For now, use a default or fail
+              echo "::error::Could not determine project ID. Please provide it manually."
+              exit 1
+            fi
+          fi
+          
+          echo "project_id=$PROJECT_ID" >> $GITHUB_OUTPUT
+          echo "Deploying for project: $PROJECT_ID"
+      
+      - name: Find landing page directory
+        id: landing_page
+        run: |
+          # Check common landing page locations
+          if [ -d "landing-page" ]; then
+            LANDING_DIR="landing-page"
+          elif [ -d "public" ]; then
+            LANDING_DIR="public"
+          elif [ -d "dist" ]; then
+            LANDING_DIR="dist"
+          elif [ -d "build" ]; then
+            LANDING_DIR="build"
+          elif [ -f "index.html" ]; then
+            LANDING_DIR="."
+          else
+            echo "::error::No landing page found. Expected index.html in: landing-page/, public/, dist/, build/, or root"
+            exit 1
+          fi
+          
+          echo "landing_dir=$LANDING_DIR" >> $GITHUB_OUTPUT
+          echo "Found landing page in: $LANDING_DIR"
+      
+      - name: Deploy to S3
+        run: |
+          PROJECT_ID="${{ steps.project.outputs.project_id }}"
+          LANDING_DIR="${{ steps.landing_page.outputs.landing_dir }}"
+          S3_PATH="s3://${{ env.S3_BUCKET }}/projects/$PROJECT_ID/landing-page/"
+          
+          echo "Deploying $LANDING_DIR to $S3_PATH"
+          
+          # Sync landing page files to S3
+          aws s3 sync "$LANDING_DIR" "$S3_PATH" \
+            --delete \
+            --cache-control "max-age=3600" \
+            --metadata-directive REPLACE
+          
+          # Set content types for common files
+          aws s3 cp "$S3_PATH" "$S3_PATH" \
+            --recursive \
+            --exclude "*" \
+            --include "*.html" \
+            --content-type "text/html" \
+            --metadata-directive REPLACE
+          
+          aws s3 cp "$S3_PATH" "$S3_PATH" \
+            --recursive \
+            --exclude "*" \
+            --include "*.css" \
+            --content-type "text/css" \
+            --metadata-directive REPLACE
+          
+          aws s3 cp "$S3_PATH" "$S3_PATH" \
+            --recursive \
+            --exclude "*" \
+            --include "*.js" \
+            --content-type "application/javascript" \
+            --metadata-directive REPLACE
+          
+          aws s3 cp "$S3_PATH" "$S3_PATH" \
+            --recursive \
+            --exclude "*" \
+            --include "*.json" \
+            --content-type "application/json" \
+            --metadata-directive REPLACE
+          
+          echo "✓ Files uploaded to S3"
+      
+      - name: Invalidate CloudFront cache
+        run: |
+          PROJECT_ID="${{ steps.project.outputs.project_id }}"
+          
+          echo "Creating CloudFront invalidation..."
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/projects/$PROJECT_ID/landing-page/*"
+          
+          echo "✓ CloudFront cache invalidated"
+      
+      - name: Update CloudFront default root object
+        run: |
+          PROJECT_ID="${{ steps.project.outputs.project_id }}"
+          
+          echo "Updating CloudFront default root object..."
+          
+          # Get current distribution config
+          aws cloudfront get-distribution-config \
+            --id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
+            > /tmp/cf-config.json
+          
+          # Extract ETag
+          ETAG=$(jq -r '.ETag' /tmp/cf-config.json)
+          
+          # Update default root object
+          jq ".DistributionConfig.DefaultRootObject = \"projects/$PROJECT_ID/landing-page/index.html\"" \
+            /tmp/cf-config.json | jq '.DistributionConfig' > /tmp/cf-updated.json
+          
+          # Update distribution
+          aws cloudfront update-distribution \
+            --id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --distribution-config file:///tmp/cf-updated.json \
+            --if-match "$ETAG" \
+            > /dev/null
+          
+          echo "✓ CloudFront default root object updated"
+      
+      - name: Deployment summary
+        run: |
+          PROJECT_ID="${{ steps.project.outputs.project_id }}"
+          
+          echo "=========================================="
+          echo "✓ Landing Page Deployed Successfully"
+          echo "=========================================="
+          echo ""
+          echo "Project ID: $PROJECT_ID"
+          echo "S3 Location: s3://${{ env.S3_BUCKET }}/projects/$PROJECT_ID/landing-page/"
+          echo "Landing Page URL: https://www.digitalmonk.mx"
+          echo ""
+          echo "Note: CloudFront changes may take 5-10 minutes to propagate globally"
+          echo "=========================================="
