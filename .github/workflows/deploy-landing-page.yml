@@ -156,7 +156,8 @@ jobs:
           ETAG=$(jq -r '.ETag' /tmp/cf-config.json)
           
           # Update default root object
-          jq ".DistributionConfig.DefaultRootObject = \"projects/$PROJECT_ID/landing-page/index.html\"" \
+          # Update default root object to relative path (not full path)
+          jq '.DistributionConfig.DefaultRootObject = "index.html"' \
             /tmp/cf-config.json | jq '.DistributionConfig' > /tmp/cf-updated.json
           
           # Update distribution
