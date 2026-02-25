@@ -10,6 +10,9 @@ on:
       - 'dist/**'
       - 'build/**'
       - 'index.html'
+      - 'assets/**'
+      - 'html/**'
+      - '.github/workflows/deploy-landing-page.yml'
   workflow_dispatch:
     inputs:
       project_id:
