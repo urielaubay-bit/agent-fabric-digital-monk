@@ -93,39 +93,46 @@ jobs:
           
           echo "Deploying $LANDING_DIR to $S3_PATH"
           
-          # Sync landing page files to S3
+          # Sync landing page files to S3 with default cache
           aws s3 sync "$LANDING_DIR" "$S3_PATH" \
             --delete \
             --cache-control "max-age=3600" \
             --metadata-directive REPLACE
           
-          # Set content types for common files
+          # Set content types and shorter cache for HTML files (5 minutes)
           aws s3 cp "$S3_PATH" "$S3_PATH" \
             --recursive \
             --exclude "*" \
             --include "*.html" \
             --content-type "text/html" \
+            --cache-control "max-age=300, must-revalidate" \
             --metadata-directive REPLACE
           
+          # Set content types for CSS files (1 hour cache)
           aws s3 cp "$S3_PATH" "$S3_PATH" \
             --recursive \
             --exclude "*" \
             --include "*.css" \
             --content-type "text/css" \
+            --cache-control "max-age=3600" \
             --metadata-directive REPLACE
           
+          # Set content types for JS files (1 hour cache)
           aws s3 cp "$S3_PATH" "$S3_PATH" \
             --recursive \
             --exclude "*" \
             --include "*.js" \
             --content-type "application/javascript" \
+            --cache-control "max-age=3600" \
             --metadata-directive REPLACE
           
+          # Set content types for JSON files
           aws s3 cp "$S3_PATH" "$S3_PATH" \
             --recursive \
             --exclude "*" \
             --include "*.json" \
             --content-type "application/json" \
+            --cache-control "max-age=3600" \
             --metadata-directive REPLACE
           
           echo "✓ Files uploaded to S3"
@@ -134,12 +141,21 @@ jobs:
         run: |
           PROJECT_ID="${{ steps.project.outputs.project_id }}"
           
-          echo "Creating CloudFront invalidation..."
-          aws cloudfront create-invalidation \
+          echo "Creating CloudFront invalidation for all files..."
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
             --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/projects/$PROJECT_ID/landing-page/*"
+            --paths "/*" \
+            --query 'Invalidation.Id' \
+            --output text)
           
-          echo "✓ CloudFront cache invalidated"
+          echo "Invalidation ID: $INVALIDATION_ID"
+          echo "Waiting for invalidation to complete..."
+          
+          aws cloudfront wait invalidation-completed \
+            --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --id "$INVALIDATION_ID"
+          
+          echo "✓ CloudFront cache invalidated and propagated"
       
       - name: Update CloudFront default root object
         run: |
