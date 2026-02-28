@@ -49,7 +49,13 @@
         let method = 'localStorage';
 
         if (!lang) {
-            // Priority 1: Browser Languages (more reliable on file:// than IP fetch)
+            // Priority 1: Use Global Default
+            lang = DEFAULT_LANG;
+            method = 'Default (' + DEFAULT_LANG + ')';
+        }
+
+        if (false) { // Disabled browser/IP detection to strictly follow DEFAULT_LANG
+            // Priority 2: Browser Languages (more reliable on file:// than IP fetch)
             const languages = navigator.languages || [navigator.language];
             console.log('Browser languages detected:', languages);
             for (let l of languages) {
@@ -78,8 +84,11 @@
             }
         }
 
-        const finalLang = lang || DEFAULT_LANG;
-        if (!lang) method = 'Default (en)';
+        const finalLang = lang;
+        if (!lang) {
+            finalLang = DEFAULT_LANG;
+            method = 'Fallback (' + DEFAULT_LANG + ')';
+        }
 
         console.log(`Final Language: ${finalLang} (Source: ${method})`);
 
