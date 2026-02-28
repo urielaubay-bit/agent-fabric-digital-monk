@@ -1,10 +1,11 @@
 (function () {
-    const DEFAULT_LANG = 'en';
+    const DEFAULT_LANG = 'es';
     const COUNTRY_TO_LANG = {
         'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'CL': 'es', 'PE': 'es', 'VE': 'es',
         'UY': 'es', 'PY': 'es', 'BO': 'es', 'EC': 'es', 'GT': 'es', 'HN': 'es', 'SV': 'es',
         'NI': 'es', 'CR': 'es', 'PA': 'es', 'DO': 'es', 'PR': 'es',
-        'FR': 'fr', 'BE': 'fr', 'CH': 'fr', 'CA': 'fr'
+        'FR': 'fr', 'BE': 'fr', 'CH': 'fr', 'CA': 'fr',
+        'CN': 'zh', 'HK': 'zh', 'TW': 'zh', 'SG': 'zh'
     };
 
     function translatePage(lang) {
