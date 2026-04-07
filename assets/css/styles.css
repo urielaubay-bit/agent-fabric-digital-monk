@@ -16792,8 +16792,8 @@ ul {
 }/*# sourceMappingURL=styles.css.map */
 /* Language Switcher Styles */
 .lang-switcher select {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: var(--bs-white);
+  color: var(--bs-dark);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 4px 8px;
   border-radius: 4px;
@@ -16809,4 +16809,10 @@ header.header-sticky .lang-switcher select {
   color: #1f2a2e;
   border-color: rgba(0, 0, 0, 0.1);
   background: rgba(0, 0, 0, 0.05);
+}
+
+.header.fixed-header .lang-switcher select {
+  background: var(--bs-dark);
+  color: var(--bs-white);
+  border-color: rgba(255, 255, 255, 0.2);
 }

@@ -10,6 +10,12 @@
 
     function translatePage(lang) {
         console.log('Translating page to:', lang);
+        console.log('Available languages:', Object.keys(window.translations));
+
+        if (!window.translations[lang]) {
+            console.error('No translation found for:', lang, '— falling back to', DEFAULT_LANG);
+        }
+
         const dictionary = window.translations[lang] || window.translations[DEFAULT_LANG];
 
         if (!dictionary) {
@@ -84,11 +90,11 @@
             }
         }
 
-        const finalLang = lang;
         if (!lang) {
-            finalLang = DEFAULT_LANG;
+            lang = DEFAULT_LANG;
             method = 'Fallback (' + DEFAULT_LANG + ')';
         }
+        const finalLang = lang;
 
         console.log(`Final Language: ${finalLang} (Source: ${method})`);
 
