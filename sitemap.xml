@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://digitalmonk.mx/</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://digitalmonk.mx/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://digitalmonk.mx/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitalmonk.mx/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://digitalmonk.mx/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://digitalmonk.mx/?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://digitalmonk.mx/?lang=ja"/>
+  </url>
+
+  <url>
+    <loc>https://digitalmonk.mx/html/about-us.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://digitalmonk.mx/html/projects.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://digitalmonk.mx/html/blog.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://digitalmonk.mx/html/blog-detail.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://digitalmonk.mx/html/contact.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://digitalmonk.mx/html/privacy-policy.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://digitalmonk.mx/html/terms-and-conditions.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
