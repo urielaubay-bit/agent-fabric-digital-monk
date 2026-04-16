@@ -229,7 +229,10 @@ window.translations = {
         "blog_post10_body1": "Sound design is the craft of creating and placing non-musical audio elements within a project. This includes ambient sounds (the hum of an office, rain on a window), foley effects (footsteps, fabric rustling, object interactions), UI sounds (notification pings, button clicks), and cinematic effects (whooshes, impacts, transitions). Sound design makes a world feel real and lived-in. It operates mostly below the level of conscious awareness — when it's done well, you don't notice it; you just feel it.",
         "blog_post10_body2": "Music production, on the other hand, involves composing, arranging, recording, and mixing musical pieces — tracks with melody, harmony, rhythm, and structure. In the context of video, music sets the emotional tone and pacing. A tense thriller needs a very different score than a heartwarming brand film. Music can be licensed from libraries, commissioned as original compositions, or sourced from existing recordings (with appropriate licensing).",
         "blog_post10_body3": "The key distinction is function: sound design grounds the viewer in a physical reality, while music shapes their emotional experience. A documentary about a factory might use sound design to recreate the industrial environment authentically, while the score guides the viewer's emotional response to the workers' stories. Both are essential, and the best productions treat them as complementary layers rather than interchangeable elements.",
-        "blog_post10_body4": "At Digital Monk, we offer both sound design and music production as part of our post-production services. Our audio team works closely with the video editors to ensure every sonic element serves the story. Whether you need a full original score, a curated playlist of licensed tracks, or meticulous sound design for a product launch video, we have the expertise to deliver. Let's talk about what your project needs."
+        "blog_post10_body4": "At Digital Monk, we offer both sound design and music production as part of our post-production services. Our audio team works closely with the video editors to ensure every sonic element serves the story. Whether you need a full original score, a curated playlist of licensed tracks, or meticulous sound design for a product launch video, we have the expertise to deliver. Let's talk about what your project needs.",
+        "wa_msg_launch": "Hello, I am interested in the Kickstarter package.",
+        "wa_msg_scale": "Hello, I am interested in the Content Creator package.",
+        "wa_msg_elevate": "Hello, I am interested in the Agency Partner package."
     },
     "es": {
         "nav_home": "Inicio",
@@ -461,7 +464,10 @@ window.translations = {
         "blog_post10_body1": "El diseño de sonido es el oficio de crear y colocar elementos de audio no musicales dentro de un proyecto. Esto incluye sonidos ambientales (el zumbido de una oficina, lluvia en una ventana), efectos de foley (pasos, tela crujiendo, interacciones con objetos), sonidos de interfaz y efectos cinematográficos.",
         "blog_post10_body2": "La producción musical, por otro lado, implica componer, arreglar, grabar y mezclar piezas musicales — pistas con melodía, armonía, ritmo y estructura. En el contexto del video, la música establece el tono emocional y el ritmo.",
         "blog_post10_body3": "La distinción clave es la función: el diseño de sonido ancla al espectador en una realidad física, mientras que la música da forma a su experiencia emocional. Ambos son esenciales, y las mejores producciones los tratan como capas complementarias.",
-        "blog_post10_body4": "En Digital Monk, ofrecemos tanto diseño de sonido como producción musical como parte de nuestros servicios de posproducción. Nuestro equipo de audio trabaja estrechamente con los editores de video para asegurar que cada elemento sónico sirva a la historia. Hablemos sobre lo que necesita tu proyecto."
+        "blog_post10_body4": "En Digital Monk, ofrecemos tanto diseño de sonido como producción musical como parte de nuestros servicios de posproducción. Nuestro equipo de audio trabaja estrechamente con los editores de video para asegurar que cada elemento sónico sirva a la historia. Hablemos sobre lo que necesita tu proyecto.",
+        "wa_msg_launch": "Hola, me interesa el paquete Kickstarter.",
+        "wa_msg_scale": "Hola, me interesa el paquete Creador de Contenido.",
+        "wa_msg_elevate": "Hola, me interesa el paquete Socio Agencia."
     },
     "fr": {
         "nav_home": "Accueil",
@@ -693,7 +699,10 @@ window.translations = {
         "blog_post10_body1": "Le sound design est l'art de créer et placer des éléments audio non musicaux dans un projet. Cela inclut les sons ambiants (le bourdonnement d'un bureau, la pluie sur une fenêtre), les effets foley (pas, froissement de tissu, interactions avec des objets), les sons d'interface et les effets cinématographiques.",
         "blog_post10_body2": "La production musicale, en revanche, implique de composer, arranger, enregistrer et mixer des pièces musicales — des pistes avec mélodie, harmonie, rythme et structure. Dans le contexte de la vidéo, la musique établit le ton émotionnel et le rythme.",
         "blog_post10_body3": "La distinction clé est la fonction : le sound design ancre le spectateur dans une réalité physique, tandis que la musique façonne son expérience émotionnelle. Les deux sont essentiels, et les meilleures productions les traitent comme des couches complémentaires.",
-        "blog_post10_body4": "Chez Digital Monk, nous proposons à la fois le sound design et la production musicale dans le cadre de nos services de post-production. Notre équipe audio travaille en étroite collaboration avec les monteurs vidéo pour s'assurer que chaque élément sonore serve l'histoire. Parlons de ce dont votre projet a besoin."
+        "blog_post10_body4": "Chez Digital Monk, nous proposons à la fois le sound design et la production musicale dans le cadre de nos services de post-production. Notre équipe audio travaille en étroite collaboration avec les monteurs vidéo pour s'assurer que chaque élément sonore serve l'histoire. Parlons de ce dont votre projet a besoin.",
+        "wa_msg_launch": "Bonjour, je suis intéressé par le forfait Kickstarter.",
+        "wa_msg_scale": "Bonjour, je suis intéressé par le forfait Créateur de Contenu.",
+        "wa_msg_elevate": "Bonjour, je suis intéressé par le forfait Partenaire Agence."
     },
     "zh": {
         "nav_home": "首页",
@@ -925,7 +934,10 @@ window.translations = {
         "blog_post10_body1": "声音设计是在项目中创建和放置非音乐音频元素的工艺。这包括环境声音（办公室的嗡嗡声、窗户上的雨声）、拟音效果（脚步声、布料沙沙声、物体互动）、界面声音（通知提示音、按钮点击声）和电影效果（呼啸声、冲击声、过渡声）。",
         "blog_post10_body2": "另一方面，音乐制作涉及创作、编排、录制和混音音乐作品——具有旋律、和声、节奏和结构的曲目。在视频的背景下，音乐设定情感基调和节奏。",
         "blog_post10_body3": "关键区别在于功能：声音设计将观众锚定在物理现实中，而音乐塑造他们的情感体验。两者都是必不可少的，最好的制作将它们视为互补的层次，而不是可互换的元素。",
-        "blog_post10_body4": "在Digital Monk，我们提供声音设计和音乐制作作为我们后期制作服务的一部分。我们的音频团队与视频编辑密切合作，确保每个声音元素都服务于故事。无论您需要完整的原创配乐、精心策划的授权曲目播放列表，还是产品发布视频的精细声音设计，我们都有专业知识来交付。"
+        "blog_post10_body4": "在Digital Monk，我们提供声音设计和音乐制作作为我们后期制作服务的一部分。我们的音频团队与视频编辑密切合作，确保每个声音元素都服务于故事。无论您需要完整的原创配乐、精心策划的授权曲目播放列表，还是产品发布视频的精细声音设计，我们都有专业知识来交付。",
+        "wa_msg_launch": "你好，我对 Kickstarter 启动套餐感兴趣。",
+        "wa_msg_scale": "你好，我对内容创作者套餐感兴趣。",
+        "wa_msg_elevate": "你好，我对全能机构合作伙伴套餐感兴趣。"
     },
     "ja": {
         "nav_home": "ホーム",
@@ -1157,6 +1169,9 @@ window.translations = {
         "blog_post10_body1": "サウンドデザインは、プロジェクト内に非音楽的な音声要素を作成・配置する職人技です。これには環境音（オフィスのハム音、窓への雨音）、フォーリー効果（足音、布のこすれ、物体の相互作用）、UI音（通知音、ボタンクリック音）、映画的効果（ウォッシュ、インパクト、トランジション）が含まれます。",
         "blog_post10_body2": "一方、音楽制作はメロディー、ハーモニー、リズム、構造を持つ楽曲を作曲、編曲、録音、ミックスすることを含みます。映像の文脈では、音楽は感情的なトーンとペーシングを設定します。",
         "blog_post10_body3": "重要な違いは機能にあります：サウンドデザインは視聴者を物理的な現実に固定し、音楽は感情的な体験を形作ります。両方が不可欠であり、最高の制作はそれらを交換可能な要素ではなく、補完的な層として扱います。",
-        "blog_post10_body4": "Digital Monkでは、ポストプロダクションサービスの一部としてサウンドデザインと音楽制作の両方を提供しています。私たちのオーディオチームは映像編集者と密接に協力して、すべての音声要素がストーリーに奉仕することを確保します。フルオリジナルスコア、ライセンス楽曲のキュレートされたプレイリスト、または製品発表映像の精緻なサウンドデザインが必要な場合でも、私たちには専門知識があります。"
+        "blog_post10_body4": "Digital Monkでは、ポストプロダクションサービスの一部としてサウンドデザインと音楽制作の両方を提供しています。私たちのオーディオチームは映像編集者と密接に協力して、すべての音声要素がストーリーに奉仕することを確保します。フルオリジナルスコア、ライセンス楽曲のキュレートされたプレイリスト、または製品発表映像の精緻なサウンドデザインが必要な場合でも、私たちには専門知識があります。",
+        "wa_msg_launch": "こんにちは、Kickstarterパッケージに興味があります。",
+        "wa_msg_scale": "こんにちは、コンテンツクリエイターパッケージに興味があります。",
+        "wa_msg_elevate": "こんにちは、エージェンシーパートナーパッケージに興味があります。"
     }
 };
