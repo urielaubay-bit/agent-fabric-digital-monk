@@ -60,16 +60,20 @@ $(function () {
     }
 
     const btn = document.getElementById("scrollToTopBtn");
-    btn.addEventListener("click", scrollToTop);
+    if (btn) {
+        btn.addEventListener("click", scrollToTop);
 
-    window.onscroll = function () {
-        const btn = document.getElementById("scrollToTopBtn");
-        if (document.documentElement.scrollTop > 100 || document.body.scrollTop > 100) {
-            btn.style.display = "flex";
-        } else {
-            btn.style.display = "none";
+        function toggleScrollToTopButton() {
+            if (document.documentElement.scrollTop > 100 || document.body.scrollTop > 100) {
+                btn.style.display = "flex";
+            } else {
+                btn.style.display = "none";
+            }
         }
-    };
+
+        window.addEventListener("scroll", toggleScrollToTopButton);
+        toggleScrollToTopButton();
+    }
 
 
     // Aos

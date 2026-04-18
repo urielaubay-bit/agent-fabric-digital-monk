@@ -1391,24 +1391,25 @@
             </div>
             <div class="col-xl-8">
               <form class="d-flex flex-column gap-7" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                <input type="text" class="form-control border-bottom border-dark" id="formGroupExampleInput"
-                  placeholder="Name" data-i18n="placeholder_name">
+                <div>
+                  <input type="text" class="form-control border-bottom border-dark" id="formGroupExampleInput"
+                    placeholder="Name" data-i18n="placeholder_name">
+                </div>
+                <div>
+                  <input type="email" class="form-control border-bottom border-dark" id="exampleInputEmail1"
+                    placeholder="Email" aria-describedby="emailHelp" data-i18n="placeholder_email">
+                </div>
+                <div>
+                  <textarea class="form-control border-bottom border-dark" id="exampleFormControlTextarea1"
+                    placeholder="Tell us about your project" rows="3" data-i18n="placeholder_project"></textarea>
+                </div>
+                <button type="submit" class="btn w-100 justify-content-center">
+                  <span class="btn-text" data-i18n="btn_submit">Submit message</span>
+                  <iconify-icon icon="lucide:arrow-up-right"
+                    class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
+                </button>
+              </form>
             </div>
-            <div>
-              <input type="email" class="form-control border-bottom border-dark" id="exampleInputEmail1"
-                placeholder="Email" aria-describedby="emailHelp" data-i18n="placeholder_email">
-            </div>
-            <div>
-              <textarea class="form-control border-bottom border-dark" id="exampleFormControlTextarea1"
-                placeholder="Tell us about your project" rows="3" data-i18n="placeholder_project"></textarea>
-            </div>
-            <button type="submit" class="btn w-100 justify-content-center">
-              <span class="btn-text" data-i18n="btn_submit">Submit message</span>
-              <iconify-icon icon="lucide:arrow-up-right"
-                class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
-            </button>
-            </form>
-          </div>
         </div>
       </div>
   </div>
@@ -1480,6 +1481,7 @@
   <script src="./assets/js/translations.js"></script>
   <script src="./assets/js/i18n.js"></script>
   <script src="./assets/js/custom.js"></script>
+  <script src="./assets/js/cookies.js"></script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>

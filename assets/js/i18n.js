@@ -84,8 +84,8 @@
             }
         }
 
-        const finalLang = lang;
-        if (!lang) {
+        let finalLang = lang;
+        if (!finalLang) {
             finalLang = DEFAULT_LANG;
             method = 'Fallback (' + DEFAULT_LANG + ')';
         }
