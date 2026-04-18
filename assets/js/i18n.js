@@ -10,6 +10,12 @@
 
     function translatePage(lang) {
         console.log('Translating page to:', lang);
+        console.log('Available languages:', Object.keys(window.translations));
+
+        if (!window.translations[lang]) {
+            console.error('No translation found for:', lang, '— falling back to', DEFAULT_LANG);
+        }
+
         const dictionary = window.translations[lang] || window.translations[DEFAULT_LANG];
 
         if (!dictionary) {
@@ -32,6 +38,14 @@
                         el.textContent = translation;
                     }
                 }
+            }
+        });
+
+        document.querySelectorAll('[data-i18n-wa]').forEach(el => {
+            const key = el.getAttribute('data-i18n-wa');
+            const translation = dictionary[key];
+            if (translation) {
+                el.href = "https://wa.me/529514837121?text=" + encodeURIComponent(translation);
             }
         });
 
@@ -84,11 +98,11 @@
             }
         }
 
-        let finalLang = lang;
-        if (!finalLang) {
-            finalLang = DEFAULT_LANG;
+        if (!lang) {
+            lang = DEFAULT_LANG;
             method = 'Fallback (' + DEFAULT_LANG + ')';
         }
+        const finalLang = lang;
 
         console.log(`Final Language: ${finalLang} (Source: ${method})`);
 
