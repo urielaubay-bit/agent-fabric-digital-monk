@@ -232,7 +232,8 @@ window.translations = {
         "blog_post10_body4": "At Digital Monk, we offer both sound design and music production as part of our post-production services. Our audio team works closely with the video editors to ensure every sonic element serves the story. Whether you need a full original score, a curated playlist of licensed tracks, or meticulous sound design for a product launch video, we have the expertise to deliver. Let's talk about what your project needs.",
         "wa_msg_launch": "Hello, I am interested in the Kickstarter package.",
         "wa_msg_scale": "Hello, I am interested in the Content Creator package.",
-        "wa_msg_elevate": "Hello, I am interested in the Agency Partner package."
+        "wa_msg_elevate": "Hello, I am interested in the Agency Partner package.",
+        "wa_msg_footer": "Hello! I'd like to get in touch with Digital Monk."
     },
     "es": {
         "nav_home": "Inicio",
@@ -467,7 +468,8 @@ window.translations = {
         "blog_post10_body4": "En Digital Monk, ofrecemos tanto diseño de sonido como producción musical como parte de nuestros servicios de posproducción. Nuestro equipo de audio trabaja estrechamente con los editores de video para asegurar que cada elemento sónico sirva a la historia. Hablemos sobre lo que necesita tu proyecto.",
         "wa_msg_launch": "Hola, me interesa el paquete Kickstarter.",
         "wa_msg_scale": "Hola, me interesa el paquete Creador de Contenido.",
-        "wa_msg_elevate": "Hola, me interesa el paquete Socio Agencia."
+        "wa_msg_elevate": "Hola, me interesa el paquete Socio Agencia.",
+        "wa_msg_footer": "¡Hola! Me gustaría ponerme en contacto con Digital Monk."
     },
     "fr": {
         "nav_home": "Accueil",
@@ -702,7 +704,8 @@ window.translations = {
         "blog_post10_body4": "Chez Digital Monk, nous proposons à la fois le sound design et la production musicale dans le cadre de nos services de post-production. Notre équipe audio travaille en étroite collaboration avec les monteurs vidéo pour s'assurer que chaque élément sonore serve l'histoire. Parlons de ce dont votre projet a besoin.",
         "wa_msg_launch": "Bonjour, je suis intéressé par le forfait Kickstarter.",
         "wa_msg_scale": "Bonjour, je suis intéressé par le forfait Créateur de Contenu.",
-        "wa_msg_elevate": "Bonjour, je suis intéressé par le forfait Partenaire Agence."
+        "wa_msg_elevate": "Bonjour, je suis intéressé par le forfait Partenaire Agence.",
+        "wa_msg_footer": "Bonjour ! Je souhaite contacter Digital Monk."
     },
     "zh": {
         "nav_home": "首页",
@@ -937,7 +940,8 @@ window.translations = {
         "blog_post10_body4": "在Digital Monk，我们提供声音设计和音乐制作作为我们后期制作服务的一部分。我们的音频团队与视频编辑密切合作，确保每个声音元素都服务于故事。无论您需要完整的原创配乐、精心策划的授权曲目播放列表，还是产品发布视频的精细声音设计，我们都有专业知识来交付。",
         "wa_msg_launch": "你好，我对 Kickstarter 启动套餐感兴趣。",
         "wa_msg_scale": "你好，我对内容创作者套餐感兴趣。",
-        "wa_msg_elevate": "你好，我对全能机构合作伙伴套餐感兴趣。"
+        "wa_msg_elevate": "你好，我对全能机构合作伙伴套餐感兴趣。",
+        "wa_msg_footer": "你好！我想联系 Digital Monk。"
     },
     "ja": {
         "nav_home": "ホーム",
@@ -1172,6 +1176,7 @@ window.translations = {
         "blog_post10_body4": "Digital Monkでは、ポストプロダクションサービスの一部としてサウンドデザインと音楽制作の両方を提供しています。私たちのオーディオチームは映像編集者と密接に協力して、すべての音声要素がストーリーに奉仕することを確保します。フルオリジナルスコア、ライセンス楽曲のキュレートされたプレイリスト、または製品発表映像の精緻なサウンドデザインが必要な場合でも、私たちには専門知識があります。",
         "wa_msg_launch": "こんにちは、Kickstarterパッケージに興味があります。",
         "wa_msg_scale": "こんにちは、コンテンツクリエイターパッケージに興味があります。",
-        "wa_msg_elevate": "こんにちは、エージェンシーパートナーパッケージに興味があります。"
+        "wa_msg_elevate": "こんにちは、エージェンシーパートナーパッケージに興味があります。",
+        "wa_msg_footer": "こんにちは！Digital Monk にお問い合わせしたいです。"
     }
 };

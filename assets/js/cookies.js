@@ -8,32 +8,25 @@
     marketing: false
   };
 
-  function isSpanish() {
-    return (document.documentElement.lang || "es").toLowerCase().indexOf("es") === 0;
-  }
-
-  function getCopy() {
-    if (isSpanish()) {
-      return {
-        title: "Usamos cookies",
-        body: "Usamos cookies necesarias y, con tu permiso, cookies de analitica y marketing para mejorar la experiencia.",
-        policy: "Consulta nuestra politica de privacidad y terminos.",
-        acceptAll: "Aceptar todas",
-        rejectOptional: "Rechazar opcionales",
-        customize: "Personalizar",
-        modalTitle: "Preferencias de cookies",
-        necessary: "Necesarias (siempre activas)",
-        analytics: "Analitica",
-        marketing: "Marketing",
-        save: "Guardar preferencias",
-        close: "Cerrar",
-        settings: "Configuracion de cookies",
-        privacy: "Politica de privacidad",
-        terms: "Terminos y condiciones"
-      };
-    }
-
-    return {
+  var COPY_BY_LANG = {
+    es: {
+      title: "Usamos cookies",
+      body: "Usamos cookies necesarias y, con tu permiso, cookies de analítica y marketing para mejorar la experiencia.",
+      policy: "Consulta nuestra política de privacidad y términos.",
+      acceptAll: "Aceptar todas",
+      rejectOptional: "Rechazar opcionales",
+      customize: "Personalizar",
+      modalTitle: "Preferencias de cookies",
+      necessary: "Necesarias (siempre activas)",
+      analytics: "Analítica",
+      marketing: "Marketing",
+      save: "Guardar preferencias",
+      close: "Cerrar",
+      settings: "Configuración de cookies",
+      privacy: "Política de privacidad",
+      terms: "Términos y condiciones"
+    },
+    en: {
       title: "We use cookies",
       body: "We use necessary cookies and, with your permission, analytics and marketing cookies to improve your experience.",
       policy: "See our privacy policy and terms.",
@@ -49,7 +42,63 @@
       settings: "Cookie settings",
       privacy: "Privacy policy",
       terms: "Terms and conditions"
-    };
+    },
+    fr: {
+      title: "Nous utilisons des cookies",
+      body: "Nous utilisons des cookies nécessaires et, avec votre permission, des cookies d'analyse et de marketing pour améliorer votre expérience.",
+      policy: "Consultez notre politique de confidentialité et nos conditions.",
+      acceptAll: "Tout accepter",
+      rejectOptional: "Refuser les optionnels",
+      customize: "Personnaliser",
+      modalTitle: "Préférences de cookies",
+      necessary: "Nécessaires (toujours actifs)",
+      analytics: "Analytique",
+      marketing: "Marketing",
+      save: "Enregistrer les préférences",
+      close: "Fermer",
+      settings: "Paramètres des cookies",
+      privacy: "Politique de confidentialité",
+      terms: "Conditions générales"
+    },
+    zh: {
+      title: "我们使用 Cookie",
+      body: "我们使用必要的 Cookie，并在您允许的情况下使用分析和营销 Cookie，以改善您的体验。",
+      policy: "请参阅我们的隐私政策和条款。",
+      acceptAll: "全部接受",
+      rejectOptional: "拒绝可选",
+      customize: "自定义",
+      modalTitle: "Cookie 偏好设置",
+      necessary: "必要（始终启用）",
+      analytics: "分析",
+      marketing: "营销",
+      save: "保存偏好设置",
+      close: "关闭",
+      settings: "Cookie 设置",
+      privacy: "隐私政策",
+      terms: "条款和条件"
+    },
+    ja: {
+      title: "Cookieの使用について",
+      body: "必要なCookieを使用しており、ご許可いただいた場合は分析・マーケティングCookieも使用してエクスペリエンスを向上させます。",
+      policy: "プライバシーポリシーと利用規約をご確認ください。",
+      acceptAll: "すべて同意",
+      rejectOptional: "任意を拒否",
+      customize: "カスタマイズ",
+      modalTitle: "Cookie設定",
+      necessary: "必須（常に有効）",
+      analytics: "分析",
+      marketing: "マーケティング",
+      save: "設定を保存",
+      close: "閉じる",
+      settings: "Cookie設定",
+      privacy: "プライバシーポリシー",
+      terms: "利用規約"
+    }
+  };
+
+  function getCopy() {
+    var lang = (document.documentElement.lang || "es").toLowerCase().split("-")[0];
+    return COPY_BY_LANG[lang] || COPY_BY_LANG["en"];
   }
 
   function getPolicyLinks() {

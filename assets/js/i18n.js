@@ -9,9 +9,6 @@
     };
 
     function translatePage(lang) {
-        console.log('Translating page to:', lang);
-        console.log('Available languages:', Object.keys(window.translations));
-
         if (!window.translations[lang]) {
             console.error('No translation found for:', lang, '— falling back to', DEFAULT_LANG);
         }
@@ -57,62 +54,9 @@
         if (select) select.value = lang;
     }
 
-    async function init() {
-        console.log('init() starting...');
-        let lang = localStorage.getItem('user_lang');
-        let method = 'localStorage';
-
-        if (!lang) {
-            // Priority 1: Use Global Default
-            lang = DEFAULT_LANG;
-            method = 'Default (' + DEFAULT_LANG + ')';
-        }
-
-        if (false) { // Disabled browser/IP detection to strictly follow DEFAULT_LANG
-            // Priority 2: Browser Languages (more reliable on file:// than IP fetch)
-            const languages = navigator.languages || [navigator.language];
-            console.log('Browser languages detected:', languages);
-            for (let l of languages) {
-                const short = l.split('-')[0];
-                if (window.translations[short]) {
-                    lang = short;
-                    method = `Browser (${l})`;
-                    break;
-                }
-            }
-
-            // Priority 2: IP-based (often fails on file:// due to CORS)
-            if (!lang) {
-                try {
-                    console.log('Fetching IP info...');
-                    const response = await fetch('https://freeipapi.com/api/json');
-                    const data = await response.json();
-                    const code = data.countryCode || data.country_code;
-                    if (code && COUNTRY_TO_LANG[code]) {
-                        lang = COUNTRY_TO_LANG[code];
-                        method = `IP/Country (${code})`;
-                    }
-                } catch (e) {
-                    console.warn('IP detection blocked (expected on file://):', e);
-                }
-            }
-        }
-
-        if (!lang) {
-            lang = DEFAULT_LANG;
-            method = 'Fallback (' + DEFAULT_LANG + ')';
-        }
-        const finalLang = lang;
-
-        console.log(`Final Language: ${finalLang} (Source: ${method})`);
-
-        // Hide debug info once we confirm it works, or keep subtle
-        const debugBox = document.getElementById('i18n-debug');
-        if (debugBox) {
-            debugBox.innerHTML = `<span style="opacity:0.6">Lang: ${finalLang} (${method})</span> <button onclick="localStorage.clear(); location.reload();" style="background:none; border:none; color:#00ff00; text-decoration:underline; cursor:pointer; font-size:10px;">Reset</button>`;
-        }
-
-        translatePage(finalLang);
+    function init() {
+        const lang = localStorage.getItem('user_lang') || DEFAULT_LANG;
+        translatePage(lang);
     }
 
     // Run immediately if DOM is ready, otherwise wait
