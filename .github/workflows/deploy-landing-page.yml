@@ -12,6 +12,7 @@ on:
       - 'index.html'
       - 'assets/**'
       - 'html/**'
+      - 'suscripcion/**'
       - '.github/workflows/deploy-landing-page.yml'
   workflow_dispatch:
     inputs:
