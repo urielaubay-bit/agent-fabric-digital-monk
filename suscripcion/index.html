@@ -14,13 +14,6 @@
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.svg" />
   <link rel="stylesheet" href="../assets/libs/aos-master/dist/aos.css">
   <link rel="stylesheet" href="../assets/css/styles.css" />
-  <!--
-    OpenPay tokenizer scripts must execute synchronously before the checkout script
-    so that window.OpenPay is available when the form initializes.
-    DO NOT add defer/async to these two tags.
-  -->
-  <script src="https://js.openpay.mx/openpay.v1.min.js"></script>
-  <script src="https://js.openpay.mx/openpay-data.v1.min.js"></script>
 </head>
 
 <body>
@@ -276,6 +269,7 @@
     </button>
   </div>
 
+  <!-- Site scripts (defer for non-blocking page render) -->
   <script src="../assets/libs/jquery/dist/jquery.min.js" defer></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="../assets/libs/aos-master/dist/aos.js" defer></script>
@@ -284,6 +278,16 @@
   <script src="../assets/js/custom.js" defer></script>
   <script src="../assets/js/cookies.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js" defer></script>
+
+  <!--
+    OpenPay scripts load SYNCHRONOUSLY here, after jQuery (defer scripts above
+    run before DOMContentLoaded, and these sync scripts run after the DOM is
+    parsed). openpay-data.v1 requires jQuery to be present — do NOT move these
+    to <head> or before jquery.
+  -->
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="https://js.openpay.mx/openpay.v1.min.js"></script>
+  <script src="https://js.openpay.mx/openpay-data.v1.min.js"></script>
 
   <script>
   // ─────────────────────────────────────────────────────────────────────────────
@@ -341,13 +345,11 @@
     var deviceSessionId = null;
     var planId = null;
 
-    document.addEventListener('DOMContentLoaded', function () {
-
-      // ── Init OpenPay ──────────────────────────────────────────────────────
-      if (!window.OpenPay) {
-        showAlert('Could not load the payment processor. Check your connection and try again.');
-        return;
-      }
+    // DOM is fully parsed — scripts at bottom of body run after all HTML is ready.
+    // ── Init OpenPay ──────────────────────────────────────────────────────────
+    if (!window.OpenPay) {
+      showAlert('Could not load the payment processor. Check your connection and try again.');
+    } else {
       try {
         window.OpenPay.setId(MERCHANT_ID);
         window.OpenPay.setApiKey(PUBLIC_KEY);
@@ -356,10 +358,13 @@
       } catch (e) {
         showAlert('Could not initialize the payment processor. Please reload the page.');
       }
-      if (SANDBOX) {
-        var badge = document.getElementById('sandbox-badge');
-        if (badge) badge.style.display = '';
-      }
+    }
+    if (SANDBOX) {
+      var badge = document.getElementById('sandbox-badge');
+      if (badge) badge.style.display = '';
+    }
+
+    (function initPage() {
 
       // ── Read URL params ───────────────────────────────────────────────────
       var p = new URLSearchParams(window.location.search);
@@ -408,7 +413,7 @@
         var p2 = new URLSearchParams(window.location.search);
         refreshBtnLabel(p2.get('monto') || '', p2.get('periodo') || '');
       });
-    });
+    }());
 
     // ── Handle submit (async) ─────────────────────────────────────────────────
     async function handleSubmit() {
