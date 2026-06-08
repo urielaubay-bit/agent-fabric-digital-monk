@@ -16848,3 +16848,24 @@ header.header-sticky .lang-switcher select {
 .service-card:hover .service-card-arrow {
   transform: translate(3px, -3px);
 }
+
+/* ── Checkout page ────────────────────────────────────────────────────────── */
+.checkout-plan-summary {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--bs-primary);
+}
+.checkout-input:focus {
+  border-color: var(--bs-primary) !important;
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.2) !important;
+}
+.checkout-spinner {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  border-top-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  vertical-align: -0.15em;
+}

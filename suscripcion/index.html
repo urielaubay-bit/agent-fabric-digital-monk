@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subscription | Digital Monk</title>
+  <meta name="description" content="Activate your subscription with Digital Monk. Secure payments processed by OpenPay México.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://www.digitalmonk.mx/suscripcion/">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://js.openpay.mx">
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.svg" />
+  <link rel="stylesheet" href="../assets/libs/aos-master/dist/aos.css">
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <!--
+    OpenPay tokenizer scripts must execute synchronously before the checkout script
+    so that window.OpenPay is available when the form initializes.
+    DO NOT add defer/async to these two tags.
+  -->
+  <script src="https://js.openpay.mx/openpay.v1.min.js"></script>
+  <script src="https://js.openpay.mx/openpay-data.v1.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header border-4 border-primary border-top position-fixed start-0 top-0 w-100">
+    <div class="container">
+      <div class="header-wrapper d-flex align-items-center justify-content-between">
+        <div class="logo">
+          <a href="../index.html" class="logo-white"><img src="../assets/images/logos/logo-white.svg" alt="Digital Monk" class="img-fluid"></a>
+          <a href="../index.html" class="logo-dark"><img src="../assets/images/logos/logo-dark.svg" alt="Digital Monk" class="img-fluid"></a>
+        </div>
+        <div class="d-flex align-items-center gap-4">
+          <div class="lang-switcher">
+            <select onchange="window.setLanguage(this.value)" id="langSelect">
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+              <option value="fr">FR</option>
+              <option value="zh">CN</option>
+              <option value="ja">JA</option>
+            </select>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-secondary toggle-menu round-45 p-2 d-flex align-items-center justify-content-center bg-white rounded-circle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+              <iconify-icon icon="solar:hamburger-menu-line-duotone" class="menu-icon fs-8 text-dark"></iconify-icon>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end p-4">
+              <div class="d-flex flex-column gap-6">
+                <div class="hstack justify-content-between border-bottom pb-6">
+                  <p class="mb-0 fs-5 text-dark" data-i18n="menu_title">Menú</p>
+                  <button type="button" class="btn-close opacity-75" aria-label="Close"></button>
+                </div>
+                <ul class="header-menu list-unstyled mb-0 d-flex flex-column gap-2">
+                  <li class="header-item"><a href="../index.html#home" class="header-link hstack gap-2 fs-7 fw-bold text-dark"><img src="../assets/images/svgs/secondary-leaf.svg" alt="" width="20" height="20" class="img-fluid animate-spin"><span data-i18n="nav_home">Inicio</span></a></li>
+                  <li class="header-item"><a href="../index.html#about" class="header-link hstack gap-2 fs-7 fw-bold text-dark"><img src="../assets/images/svgs/secondary-leaf.svg" alt="" width="20" height="20" class="img-fluid animate-spin"><span data-i18n="nav_about">Nosotros</span></a></li>
+                  <li class="header-item"><a href="../index.html#projects" class="header-link hstack gap-2 fs-7 fw-bold text-dark"><img src="../assets/images/svgs/secondary-leaf.svg" alt="" width="20" height="20" class="img-fluid animate-spin"><span data-i18n="nav_projects">Proyectos</span></a></li>
+                  <li class="header-item"><a href="../index.html#blog" class="header-link hstack gap-2 fs-7 fw-bold text-dark"><img src="../assets/images/svgs/secondary-leaf.svg" alt="" width="20" height="20" class="img-fluid animate-spin"><span data-i18n="nav_blog">Blog</span></a></li>
+                  <li class="header-item"><a href="../index.html#services" class="header-link hstack gap-2 fs-7 fw-bold text-dark"><img src="../assets/images/svgs/secondary-leaf.svg" alt="" width="20" height="20" class="img-fluid animate-spin"><span data-i18n="nav_services">Servicios</span></a></li>
+                </ul>
+                <div>
+                  <a class="text-dark hstack gap-2" href="https://wa.me/529514837121" data-i18n-wa="wa_msg_footer" target="_blank"><iconify-icon icon="logos:whatsapp-icon" class="fs-6"></iconify-icon>+52 951 483 7121</a>
+                  <a class="fs-8 text-dark fw-bold" href="mailto:info@digitalmonk.mx">info@digitalmonk.mx</a>
+                </div>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-wrapper overflow-hidden">
+
+    <!-- Hero -->
+    <section class="banner-section banner-inner-section position-relative overflow-hidden d-flex align-items-end"
+      style="background-image: url(../assets/images/services/services-img-3.jpg);">
+      <div class="container">
+        <div class="d-flex flex-column gap-4 pb-5 pb-xl-10 position-relative z-1">
+          <div class="col-xl-6">
+            <div class="d-flex align-items-center gap-4" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+              <img src="../assets/images/svgs/primary-leaf.svg" alt="" class="img-fluid animate-spin">
+              <p class="mb-0 text-white fs-5 text-opacity-70">100% secure payment processed by OpenPay México.</p>
+            </div>
+          </div>
+          <div class="d-flex align-items-end gap-3" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+            <h1 class="mb-0 fs-16 text-white lh-1" id="hero-title">Subscription</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checkout section -->
+    <section class="py-5 py-lg-11 py-xl-12">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-7 col-xl-6">
+
+            <!-- Plan summary — populated from URL params, hidden when no ?plan= -->
+            <div id="plan-summary" class="checkout-plan-summary rounded-3 p-5 mb-5" style="display:none">
+              <p class="mb-3 text-primary text-uppercase fw-semibold fs-8" style="letter-spacing:.06em">Selected plan</p>
+              <div class="d-flex align-items-start justify-content-between gap-4">
+                <div class="min-w-0">
+                  <h3 class="mb-1 text-white fs-5 fw-bold" id="plan-name">—</h3>
+                  <p class="mb-0 text-white text-opacity-60 fs-7" id="plan-desc"></p>
+                </div>
+                <div class="text-end flex-shrink-0">
+                  <p class="mb-0 text-primary fw-bold fs-3 lh-1" id="plan-price"></p>
+                  <p class="mb-0 text-white text-opacity-50 fs-8 mt-1" id="plan-period"></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Checkout card -->
+            <div id="checkout-card" class="bg-white rounded-3 p-5 p-xl-7" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+
+              <div class="mb-5">
+                <div class="d-flex align-items-center justify-content-between gap-3 mb-2">
+                  <h2 class="mb-0 fs-5 text-dark fw-bold">Payment details</h2>
+                  <span id="sandbox-badge" class="badge fw-semibold fs-9" style="display:none;background:#fff3cd;color:#7a5c00">Test mode</span>
+                </div>
+                <p class="mb-0 text-dark text-opacity-50 fs-8">
+                  Your card number is encrypted directly with OpenPay and <strong class="text-dark text-opacity-70">never reaches our servers</strong>.
+                </p>
+              </div>
+
+              <form id="checkout-form" novalidate>
+                <div class="row g-3">
+
+                  <div class="col-6">
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-name">First name</label>
+                    <input id="f-name" class="form-control checkout-input" type="text"
+                      autocomplete="given-name" placeholder="Ana" required>
+                  </div>
+                  <div class="col-6">
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-last">Last name</label>
+                    <input id="f-last" class="form-control checkout-input" type="text"
+                      autocomplete="family-name" placeholder="García">
+                  </div>
+
+                  <div class="col-12">
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-email">Email address</label>
+                    <input id="f-email" class="form-control checkout-input" type="email"
+                      autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-card">Card number</label>
+                    <input id="f-card" class="form-control checkout-input" type="text"
+                      inputmode="numeric" autocomplete="cc-number"
+                      placeholder="0000 0000 0000 0000" required>
+                  </div>
+
+                  <div class="col-6">
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-exp">Expiry (MM/YY)</label>
+                    <input id="f-exp" class="form-control checkout-input" type="text"
+                      inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" required>
+                  </div>
+                  <div class="col-6">
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-cvv">CVV</label>
+                    <input id="f-cvv" class="form-control checkout-input" type="text"
+                      inputmode="numeric" autocomplete="cc-csc"
+                      placeholder="123" maxlength="4" required>
+                  </div>
+
+                </div>
+
+                <div id="checkout-alert" class="alert alert-danger mt-4 mb-0 d-none fs-8" role="alert"></div>
+
+                <button id="checkout-btn" class="btn btn-primary w-100 py-3 fw-bold mt-4 fs-7" type="submit">
+                  Subscribe
+                </button>
+
+                <p class="text-center text-dark text-opacity-40 fs-9 mt-3 mb-0">
+                  <iconify-icon icon="lucide:lock" style="vertical-align:-.1em" class="me-1"></iconify-icon>
+                  Secure payment · TLS encryption · Processed by OpenPay México
+                </p>
+              </form>
+            </div>
+
+            <!-- Success state (shown after successful subscription) -->
+            <div id="success-state" class="bg-white rounded-3 p-5 p-xl-7 text-center d-none">
+              <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                style="width:3.5rem;height:3.5rem">
+                <iconify-icon icon="lucide:check" class="fs-5 text-dark fw-bold"></iconify-icon>
+              </div>
+              <h2 class="text-dark fs-4 fw-bold mb-2">Subscription activated!</h2>
+              <p class="text-dark text-opacity-60 mb-4">
+                Your membership has been registered. You'll receive a confirmation to your email address.
+              </p>
+              <p id="success-ref" class="text-dark text-opacity-40 fs-8 mb-4"></p>
+              <button class="btn btn-outline-dark px-5 py-2 fw-semibold" id="subscribe-again-btn">
+                Register another subscription
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-5 py-lg-11 py-xl-12 bg-dark">
+      <div class="container">
+        <div class="row align-items-center gap-5 gap-xl-0">
+          <div class="col-xl-7" data-aos="fade-right" data-aos-delay="100" data-aos-duration="1000">
+            <h2 class="mb-0 text-white" data-i18n="footer_cta">¿Construimos algo juntos?</h2>
+          </div>
+          <div class="col-xl-5 d-flex flex-wrap gap-3" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+            <a href="https://wa.me/529514837121" data-i18n-wa="wa_msg_launch" target="_blank"
+              class="btn btn-primary hstack gap-2 px-5 py-3 fw-bold">
+              <iconify-icon icon="logos:whatsapp-icon" class="fs-6"></iconify-icon>
+              <span>WhatsApp</span>
+            </a>
+            <a href="mailto:info@digitalmonk.mx"
+              class="btn border border-white border-opacity-25 text-white hstack gap-2 px-5 py-3">
+              <iconify-icon icon="lucide:mail" class="fs-7"></iconify-icon>
+              <span>info@digitalmonk.mx</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- Footer -->
+  <footer class="footer bg-dark py-5 py-lg-11 py-xl-12" style="border-top:1px solid rgba(255,255,255,.1)">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-5 mb-8 mb-xl-0">
+          <div class="d-flex flex-column gap-8 pe-xl-5">
+            <h2 class="mb-0 text-white" data-i18n="footer_cta">¿Construimos algo juntos?</h2>
+            <div class="d-flex flex-column gap-2">
+              <a href="mailto:info@digitalmonk.mx" class="link-hover hstack gap-3 text-white fs-5">
+                <iconify-icon icon="lucide:arrow-up-right" class="fs-7 text-primary"></iconify-icon>
+                info@digitalmonk.mx
+              </a>
+              <a href="https://wa.me/529514837121" target="_blank" class="link-hover hstack gap-3 text-white fs-5"
+                data-i18n-wa="wa_msg_footer">
+                <iconify-icon icon="logos:whatsapp-icon" class="fs-7"></iconify-icon>
+                +52 951 483 7121
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-xl-2 mb-8 mb-xl-0">
+          <ul class="footer-menu list-unstyled mb-0 d-flex flex-column gap-2">
+            <li><a class="link-hover fs-5 text-white" href="../index.html#home" data-i18n="footer_home">Inicio</a></li>
+            <li><a class="link-hover fs-5 text-white" href="../index.html#about" data-i18n="footer_about">Nosotros</a></li>
+            <li><a class="link-hover fs-5 text-white" href="../index.html#services" data-i18n="footer_services">Servicios</a></li>
+            <li><a class="link-hover fs-5 text-white" href="../html/projects.html" data-i18n="footer_work">Trabajo</a></li>
+            <li><a class="link-hover fs-5 text-white" href="../html/terms-and-conditions.html" data-i18n="footer_terms">Términos</a></li>
+            <li><a class="link-hover fs-5 text-white" href="../html/privacy-policy.html" data-i18n="footer_privacy">Política de Privacidad</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 col-xl-2 mb-8 mb-xl-0">
+          <ul class="footer-menu list-unstyled mb-0 d-flex flex-column gap-2">
+            <li><a class="link-hover fs-5 text-white" href="https://www.youtube.com/@digitalmonk-u6x" target="_blank" rel="noopener noreferrer">Youtube</a></li>
+            <li><a class="link-hover fs-5 text-white" href="https://www.instagram.com/digital.monk.services" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 col-xl-3 mb-8 mb-xl-0">
+          <p class="mb-0 text-white text-opacity-70 text-md-end" data-i18n="footer_copyright">© Digital Monk copyright 2026</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="get-template hstack gap-2">
+    <button class="btn bg-primary p-2 round-52 rounded-circle hstack justify-content-center flex-shrink-0"
+      id="scrollToTopBtn">
+      <iconify-icon icon="lucide:arrow-up" class="fs-7 text-dark"></iconify-icon>
+    </button>
+  </div>
+
+  <script src="../assets/libs/jquery/dist/jquery.min.js" defer></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="../assets/libs/aos-master/dist/aos.js" defer></script>
+  <script src="../assets/js/translations.js" defer></script>
+  <script src="../assets/js/i18n.js" defer></script>
+  <script src="../assets/js/custom.js" defer></script>
+  <script src="../assets/js/cookies.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js" defer></script>
+
+  <script>
+  // ─────────────────────────────────────────────────────────────────────────────
+  // OpenPay Checkout — publishable config only. The private key lives on the
+  // backend Lambda and is NEVER referenced here.
+  //
+  // Before going live update these four values:
+  //   MERCHANT_ID  → your OpenPay merchant ID (ID de comercio, not a key)
+  //   PUBLIC_KEY   → production llave pública (pk_live_...)
+  //   SANDBOX      → false
+  //   API_URL      → ApiBaseUrl from `sam deploy` output (e.g. https://api.digitalmonk.mx)
+  // ─────────────────────────────────────────────────────────────────────────────
+  (function () {
+    var MERCHANT_ID = 'TODO_MERCHANT_ID';
+    var PUBLIC_KEY  = 'pk_d0afb219c00b4017b86db192c4e9a72e';
+    var SANDBOX     = true;
+    var API_URL     = 'TODO_API_BASE_URL'; // e.g. https://xyz.execute-api.us-east-1.amazonaws.com
+
+    var PERIOD_LABELS = {
+      mensual:   'per month',
+      semanal:   'per week',
+      quincenal: 'biweekly',
+      anual:     'per year',
+      monthly:   'per month',
+      weekly:    'per week',
+      yearly:    'per year',
+    };
+
+    function formatMXN(v) {
+      var n = Number(v);
+      return isNaN(n) ? v : n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+    }
+    function fmtCard(v) {
+      return v.replace(/\D/g, '').slice(0, 19).replace(/(.{4})/g, '$1 ').trim();
+    }
+    function fmtExp(v) {
+      var d = v.replace(/\D/g, '').slice(0, 4);
+      return d.length <= 2 ? d : d.slice(0, 2) + '/' + d.slice(2);
+    }
+    function parseExp(v) {
+      var m = v.replace(/\s/g, '').match(/^(\d{2})\/(\d{2})$/);
+      if (!m) return null;
+      var mo = Number(m[1]);
+      return (mo < 1 || mo > 12) ? null : { month: m[1], year: m[2] };
+    }
+    function tokenize(card) {
+      return new Promise(function (ok, fail) {
+        window.OpenPay.token.create(card,
+          function (r) { ok(r.data.id); },
+          function (e) { fail(e); }
+        );
+      });
+    }
+
+    var deviceSessionId = null;
+    var planId = null;
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // ── Init OpenPay ──────────────────────────────────────────────────────
+      if (!window.OpenPay) {
+        showAlert('Could not load the payment processor. Check your connection and try again.');
+        return;
+      }
+      try {
+        window.OpenPay.setId(MERCHANT_ID);
+        window.OpenPay.setApiKey(PUBLIC_KEY);
+        window.OpenPay.setSandboxMode(SANDBOX);
+        deviceSessionId = window.OpenPay.deviceData.setup();
+      } catch (e) {
+        showAlert('Could not initialize the payment processor. Please reload the page.');
+      }
+      if (SANDBOX) {
+        var badge = document.getElementById('sandbox-badge');
+        if (badge) badge.style.display = '';
+      }
+
+      // ── Read URL params ───────────────────────────────────────────────────
+      var p = new URLSearchParams(window.location.search);
+      planId       = p.get('plan')    || null;
+      var nombre   = p.get('nombre')  || '';
+      var monto    = p.get('monto')   || '';
+      var periodo  = p.get('periodo') || '';
+      var desc     = p.get('desc')    || '';
+
+      if (planId && nombre) {
+        // Show plan summary card
+        document.getElementById('plan-summary').style.display = '';
+        document.getElementById('plan-name').textContent = decodeURIComponent(nombre);
+        if (desc) document.getElementById('plan-desc').textContent = decodeURIComponent(desc);
+        if (monto) {
+          document.getElementById('plan-price').textContent = formatMXN(monto);
+          document.getElementById('plan-period').textContent =
+            PERIOD_LABELS[periodo] || (periodo ? decodeURIComponent(periodo) : 'per cycle');
+        }
+        // Update hero heading and button label
+        document.getElementById('hero-title').textContent = decodeURIComponent(nombre);
+        refreshBtnLabel(monto, periodo);
+      }
+
+      // ── Input formatters ──────────────────────────────────────────────────
+      var cardEl = document.getElementById('f-card');
+      var expEl  = document.getElementById('f-exp');
+      var cvvEl  = document.getElementById('f-cvv');
+
+      cardEl.addEventListener('input', function () { this.value = fmtCard(this.value); });
+      expEl.addEventListener('input',  function () { this.value = fmtExp(this.value); });
+      cvvEl.addEventListener('input',  function () { this.value = this.value.replace(/\D/g, '').slice(0, 4); });
+
+      // ── Form submit ───────────────────────────────────────────────────────
+      document.getElementById('checkout-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        handleSubmit();
+      });
+
+      // ── Subscribe again ───────────────────────────────────────────────────
+      document.getElementById('subscribe-again-btn').addEventListener('click', function () {
+        document.getElementById('success-state').classList.add('d-none');
+        document.getElementById('checkout-card').classList.remove('d-none');
+        document.getElementById('checkout-form').reset();
+        clearAlert();
+        var p2 = new URLSearchParams(window.location.search);
+        refreshBtnLabel(p2.get('monto') || '', p2.get('periodo') || '');
+      });
+    });
+
+    // ── Handle submit (async) ─────────────────────────────────────────────────
+    async function handleSubmit() {
+      clearAlert();
+      var name  = document.getElementById('f-name').value.trim();
+      var last  = document.getElementById('f-last').value.trim();
+      var email = document.getElementById('f-email').value.trim();
+      var card  = document.getElementById('f-card').value;
+      var exp   = parseExp(document.getElementById('f-exp').value);
+      var cvv   = document.getElementById('f-cvv').value;
+
+      if (!name || !email || !card || !exp || !cvv) {
+        showAlert('Please fill in all fields. Expiry must be in MM/YY format.');
+        return;
+      }
+      if (!deviceSessionId) {
+        showAlert('The payment processor is not ready. Please reload the page and try again.');
+        return;
+      }
+
+      setLoading(true);
+      try {
+        var tokenId = await tokenize({
+          card_number:        card.replace(/\s/g, ''),
+          holder_name:        (name + (last ? ' ' + last : '')).trim(),
+          expiration_month:   exp.month,
+          expiration_year:    exp.year,
+          cvv2:               cvv,
+        });
+
+        var body = {
+          name:              name,
+          last_name:         last || undefined,
+          email:             email,
+          token_id:          tokenId,
+          device_session_id: deviceSessionId,
+        };
+        if (planId) body.plan_id = planId;
+
+        var resp = await fetch(API_URL + '/api/subscribe', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(body),
+        });
+        var data = await resp.json().catch(function () { return {}; });
+
+        if (!resp.ok || !data.ok) {
+          throw new Error(data.error || 'Could not process the subscription.');
+        }
+
+        // ── Success ──
+        document.getElementById('checkout-card').classList.add('d-none');
+        var successEl = document.getElementById('success-state');
+        successEl.classList.remove('d-none');
+        if (data.subscription_id) {
+          document.getElementById('success-ref').textContent = 'Reference: ' + data.subscription_id;
+        }
+
+      } catch (err) {
+        var msg = (err && err.data && err.data.description)
+          || (err && err.message)
+          || 'An error occurred while processing your payment. Please try again.';
+        showAlert(msg);
+        setLoading(false);
+      }
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+    function setLoading(on) {
+      var btn    = document.getElementById('checkout-btn');
+      var inputs = document.querySelectorAll('#checkout-form input');
+      btn.disabled = on;
+      inputs.forEach(function (el) { el.disabled = on; });
+      if (on) {
+        btn.innerHTML = '<span class="checkout-spinner me-2" aria-hidden="true"></span>Processing…';
+      } else {
+        var p = new URLSearchParams(window.location.search);
+        refreshBtnLabel(p.get('monto') || '', p.get('periodo') || '');
+      }
+    }
+    function refreshBtnLabel(monto, periodo) {
+      var btn = document.getElementById('checkout-btn');
+      if (!btn) return;
+      if (monto) {
+        var label = PERIOD_LABELS[periodo] || (periodo ? decodeURIComponent(periodo) : '');
+        btn.textContent = 'Subscribe · ' + formatMXN(monto) + (label ? ' / ' + label : '');
+      } else {
+        btn.textContent = 'Subscribe';
+      }
+    }
+    function showAlert(msg) {
+      var el = document.getElementById('checkout-alert');
+      el.textContent = msg;
+      el.classList.remove('d-none');
+    }
+    function clearAlert() {
+      var el = document.getElementById('checkout-alert');
+      el.classList.add('d-none');
+      el.textContent = '';
+    }
+
+  })();
+  </script>
+
+</body>
+</html>
