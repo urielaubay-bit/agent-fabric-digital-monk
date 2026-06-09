@@ -7,7 +7,6 @@
   <title>Subscription | Digital Monk</title>
   <meta name="description" content="Activate your subscription with Digital Monk. Secure payments processed by OpenPay México.">
   <meta name="robots" content="noindex, nofollow">
-  <link rel="canonical" href="https://www.digitalmonk.mx/suscripcion/">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="dns-prefetch" href="https://js.openpay.mx">
@@ -123,7 +122,7 @@
                 <div class="row g-3">
 
                   <div class="col-6">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-name">First name</label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-name">First name <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-name" class="form-control checkout-input" type="text"
                       autocomplete="given-name" placeholder="Ana" required>
                   </div>
@@ -134,25 +133,25 @@
                   </div>
 
                   <div class="col-12">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-email">Email address</label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-email">Email address <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-email" class="form-control checkout-input" type="email"
                       autocomplete="email" inputmode="email" placeholder="you@example.com" required>
                   </div>
 
                   <div class="col-12">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-card">Card number</label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-card">Card number <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-card" class="form-control checkout-input" type="text"
                       inputmode="numeric" autocomplete="cc-number"
                       placeholder="0000 0000 0000 0000" required>
                   </div>
 
                   <div class="col-6">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-exp">Expiry (MM/YY)</label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-exp">Expiry (MM/YY) <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-exp" class="form-control checkout-input" type="text"
                       inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" required>
                   </div>
                   <div class="col-6">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-cvv">CVV</label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-cvv">CVV <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-cvv" class="form-control checkout-input" type="text"
                       inputmode="numeric" autocomplete="cc-csc"
                       placeholder="123" maxlength="4" required>
@@ -162,7 +161,7 @@
 
                 <div id="checkout-alert" class="alert alert-danger mt-4 mb-0 d-none fs-8" role="alert"></div>
 
-                <button id="checkout-btn" class="btn btn-primary w-100 py-3 fw-bold mt-4 fs-7" type="submit">
+                <button id="checkout-btn" class="btn btn-primary w-100 py-3 fw-bold mt-4 fs-7" type="submit" disabled>
                   Subscribe
                 </button>
 
@@ -183,7 +182,8 @@
               <p class="text-dark text-opacity-60 mb-4">
                 Your membership has been registered. You'll receive a confirmation to your email address.
               </p>
-              <p id="success-ref" class="text-dark text-opacity-40 fs-8 mb-4"></p>
+              <p id="success-ref" class="text-dark text-opacity-40 fs-8 mb-1"></p>
+              <p id="success-charge-date" class="text-dark text-opacity-40 fs-8 mb-4"></p>
               <button class="btn btn-outline-dark px-5 py-2 fw-semibold" id="subscribe-again-btn">
                 Register another subscription
               </button>
@@ -336,8 +336,14 @@
     function tokenize(card) {
       return new Promise(function (ok, fail) {
         window.OpenPay.token.create(card,
-          function (r) { ok(r.data.id); },
-          function (e) { fail(e); }
+          function (r) {
+            var id = (r && r.data && r.data.id) || (r && r.id);
+            if (id) { ok(id); } else { fail(new Error('Token response missing ID. Please try again.')); }
+          },
+          function (e) {
+            console.error('[tokenize] error:', e);
+            fail(e);
+          }
         );
       });
     }
@@ -363,6 +369,7 @@
       var badge = document.getElementById('sandbox-badge');
       if (badge) badge.style.display = '';
     }
+    checkFormReady();
 
     (function initPage() {
 
@@ -389,19 +396,28 @@
         refreshBtnLabel(monto, periodo);
       }
 
-      // ── Input formatters ──────────────────────────────────────────────────
+      // ── Input formatters + real-time enable/disable ───────────────────────
       var cardEl = document.getElementById('f-card');
       var expEl  = document.getElementById('f-exp');
       var cvvEl  = document.getElementById('f-cvv');
 
-      cardEl.addEventListener('input', function () { this.value = fmtCard(this.value); });
-      expEl.addEventListener('input',  function () { this.value = fmtExp(this.value); });
-      cvvEl.addEventListener('input',  function () { this.value = this.value.replace(/\D/g, '').slice(0, 4); });
+      cardEl.addEventListener('input', function () { this.value = fmtCard(this.value); checkFormReady(); });
+      expEl.addEventListener('input',  function () { this.value = fmtExp(this.value);  checkFormReady(); });
+      cvvEl.addEventListener('input',  function () { this.value = this.value.replace(/\D/g, '').slice(0, 4); checkFormReady(); });
+
+      document.getElementById('f-name').addEventListener('input',  checkFormReady);
+      document.getElementById('f-email').addEventListener('input', checkFormReady);
+
+      checkFormReady();
 
       // ── Form submit ───────────────────────────────────────────────────────
       document.getElementById('checkout-form').addEventListener('submit', function (e) {
         e.preventDefault();
-        handleSubmit();
+        handleSubmit().catch(function (unhandled) {
+          console.error('[checkout] unhandled:', unhandled);
+          showAlert('Unexpected error: ' + (unhandled && unhandled.message ? unhandled.message : unhandled));
+          setLoading(false);
+        });
       });
 
       // ── Subscribe again ───────────────────────────────────────────────────
@@ -410,6 +426,7 @@
         document.getElementById('checkout-card').classList.remove('d-none');
         document.getElementById('checkout-form').reset();
         clearAlert();
+        checkFormReady();
         var p2 = new URLSearchParams(window.location.search);
         refreshBtnLabel(p2.get('monto') || '', p2.get('periodo') || '');
       });
@@ -425,7 +442,10 @@
       var exp   = parseExp(document.getElementById('f-exp').value);
       var cvv   = document.getElementById('f-cvv').value;
 
+      console.log('[submit] values:', { name: name, email: email, cardLen: card.replace(/\s/g,'').length, exp: exp, cvvLen: cvv.length });
+
       if (!name || !email || !card || !exp || !cvv) {
+        console.warn('[submit] validation failed:', { name: !!name, email: !!email, card: !!card, exp: !!exp, cvv: !!cvv });
         showAlert('Please fill in all fields. Expiry must be in MM/YY format.');
         return;
       }
@@ -436,13 +456,23 @@
 
       setLoading(true);
       try {
-        var tokenId = await tokenize({
-          card_number:        card.replace(/\s/g, ''),
-          holder_name:        (name + (last ? ' ' + last : '')).trim(),
-          expiration_month:   exp.month,
-          expiration_year:    exp.year,
-          cvv2:               cvv,
-        });
+        console.log('[checkout] tokenizing card…');
+        var TIMEOUT_MS = 20000;
+        var tokenId = await Promise.race([
+          tokenize({
+            card_number:      card.replace(/\s/g, ''),
+            holder_name:      (name + (last ? ' ' + last : '')).trim(),
+            expiration_month: exp.month,
+            expiration_year:  exp.year,
+            cvv2:             cvv,
+          }),
+          new Promise(function (_, reject) {
+            setTimeout(function () {
+              reject(new Error('The payment processor did not respond in time. Please try again.'));
+            }, TIMEOUT_MS);
+          }),
+        ]);
+        console.log('[checkout] token OK, calling backend…');
 
         var body = {
           name:              name,
@@ -459,6 +489,7 @@
           body:    JSON.stringify(body),
         });
         var data = await resp.json().catch(function () { return {}; });
+        console.log('[checkout] backend response:', resp.status, data);
 
         if (!resp.ok || !data.ok) {
           throw new Error(data.error || 'Could not process the subscription.');
@@ -471,8 +502,14 @@
         if (data.subscription_id) {
           document.getElementById('success-ref').textContent = 'Reference: ' + data.subscription_id;
         }
+        if (data.charge_date) {
+          var d = new Date(data.charge_date + 'T12:00:00');
+          var fmt = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+          document.getElementById('success-charge-date').textContent = 'First charge: ' + fmt;
+        }
 
       } catch (err) {
+        console.error('[checkout] error:', err);
         var msg = (err && err.data && err.data.description)
           || (err && err.message)
           || 'An error occurred while processing your payment. Please try again.';
@@ -482,16 +519,26 @@
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
+    function checkFormReady() {
+      var name  = document.getElementById('f-name').value.trim();
+      var email = document.getElementById('f-email').value.trim();
+      var card  = document.getElementById('f-card').value.replace(/\s/g, '');
+      var exp   = parseExp(document.getElementById('f-exp').value);
+      var cvv   = document.getElementById('f-cvv').value.trim();
+      var ready = !!(deviceSessionId && name && email && card.length >= 13 && exp && cvv.length >= 3);
+      document.getElementById('checkout-btn').disabled = !ready;
+    }
     function setLoading(on) {
       var btn    = document.getElementById('checkout-btn');
       var inputs = document.querySelectorAll('#checkout-form input');
-      btn.disabled = on;
       inputs.forEach(function (el) { el.disabled = on; });
       if (on) {
+        btn.disabled = true;
         btn.innerHTML = '<span class="checkout-spinner me-2" aria-hidden="true"></span>Processing…';
       } else {
         var p = new URLSearchParams(window.location.search);
         refreshBtnLabel(p.get('monto') || '', p.get('periodo') || '');
+        checkFormReady();
       }
     }
     function refreshBtnLabel(monto, periodo) {

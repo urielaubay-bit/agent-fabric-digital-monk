@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /html/sign-in.html
 Disallow: /html/sign-up.html
+Disallow: /suscripcion/
 
 Sitemap: https://digitalmonk.mx/sitemap.xml
