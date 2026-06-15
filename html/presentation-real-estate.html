@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digital Monk × Real Estate</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #C1FF72;
+      --dark: #1F2A2E;
+      --dark2: #141d20;
+      --gray: #8a9ba0;
+      --white: #ffffff;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      font-family: 'Manrope', sans-serif;
+      background: var(--dark2);
+      color: var(--white);
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* ── Slides ── */
+    .deck { width: 100%; height: 100%; position: relative; }
+
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 60px 80px;
+      opacity: 0;
+      transform: translateX(60px);
+      transition: opacity .5s ease, transform .5s ease;
+      pointer-events: none;
+    }
+    .slide.active {
+      opacity: 1; transform: translateX(0);
+      pointer-events: all;
+    }
+    .slide.exit {
+      opacity: 0; transform: translateX(-60px);
+    }
+
+    /* ── Nav dots ── */
+    .dots {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px; z-index: 100;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,.25);
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+    }
+    .dot.active { background: var(--green); transform: scale(1.3); }
+
+    /* ── Arrow nav ── */
+    .arrow {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,.07);
+      border: none; color: var(--white);
+      width: 44px; height: 44px; border-radius: 50%;
+      font-size: 18px; cursor: pointer;
+      transition: background .2s;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .arrow:hover { background: rgba(193,255,114,.2); }
+    .arrow.prev { left: 20px; }
+    .arrow.next { right: 20px; }
+
+    /* ── Slide counter ── */
+    .counter {
+      position: fixed; top: 28px; right: 32px;
+      font-size: 12px; color: var(--gray);
+      letter-spacing: .08em;
+      z-index: 100;
+    }
+
+    /* ── Logo watermark ── */
+    .watermark {
+      position: fixed; top: 24px; left: 32px;
+      font-size: 13px; font-weight: 700; letter-spacing: .12em;
+      color: rgba(255,255,255,.25);
+      z-index: 100;
+      text-transform: uppercase;
+    }
+
+    /* ── Typography ── */
+    .label {
+      font-size: 11px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: 20px;
+    }
+    h1 { font-size: clamp(48px, 7vw, 96px); font-weight: 800; line-height: 1; }
+    h2 { font-size: clamp(32px, 4.5vw, 64px); font-weight: 800; line-height: 1.05; }
+    h3 { font-size: clamp(22px, 2.8vw, 40px); font-weight: 700; line-height: 1.1; }
+    p  { font-size: clamp(15px, 1.4vw, 20px); font-weight: 400; color: rgba(255,255,255,.65); line-height: 1.65; }
+    .accent { color: var(--green); }
+    .light  { color: rgba(255,255,255,.45); }
+
+    /* ── Pill ── */
+    .pill {
+      display: inline-block;
+      background: rgba(193,255,114,.12);
+      color: var(--green);
+      border: 1px solid rgba(193,255,114,.3);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 13px; font-weight: 600;
+    }
+
+    /* ── Divider ── */
+    .line {
+      width: 48px; height: 3px;
+      background: var(--green);
+      border-radius: 2px;
+      margin: 24px 0;
+    }
+
+    /* ── Grid helpers ── */
+    .cols { display: grid; width: 100%; gap: 60px; }
+    .cols-2 { grid-template-columns: 1fr 1fr; align-items: center; }
+    .cols-3 { grid-template-columns: 1fr 1fr 1fr; align-items: start; }
+
+    /* ── Cards ── */
+    .card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .card-green {
+      background: var(--green);
+      border-radius: 16px;
+      padding: 32px;
+      color: var(--dark);
+    }
+    .card-green p { color: rgba(31,42,46,.7); }
+    .card-green .num { font-size: 56px; font-weight: 800; color: var(--dark); line-height: 1; }
+
+    /* ── Big stat ── */
+    .stat { text-align: center; }
+    .stat .num {
+      font-size: clamp(56px, 8vw, 112px);
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+    .stat .desc { font-size: 14px; color: var(--gray); margin-top: 8px; letter-spacing: .04em; }
+
+    /* ── Icon circle ── */
+    .icon-circle {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(193,255,114,.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ── Quote ── */
+    .quote {
+      border-left: 3px solid var(--green);
+      padding-left: 28px;
+    }
+    .quote blockquote {
+      font-size: clamp(18px, 2vw, 26px);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+    .quote-person { display: flex; align-items: center; gap: 14px; }
+    .quote-person img {
+      width: 48px; height: 48px; border-radius: 50%;
+      object-fit: cover; border: 2px solid var(--green);
+    }
+    .quote-person .name { font-size: 15px; font-weight: 700; }
+    .quote-person .role { font-size: 13px; color: var(--gray); }
+
+    /* ── Big number highlight ── */
+    .big-num {
+      font-size: clamp(64px, 10vw, 130px);
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    /* ── Fullscreen bg image ── */
+    .bg-cover {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+    .bg-cover::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(20,29,32,.92) 40%, rgba(20,29,32,.6));
+    }
+    .slide > .content { position: relative; z-index: 1; width: 100%; }
+
+    /* ── CTA button ── */
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--green); color: var(--dark);
+      font-weight: 700; font-size: 15px;
+      padding: 14px 32px; border-radius: 100px;
+      text-decoration: none;
+      border: none; cursor: pointer;
+      transition: opacity .2s, transform .2s;
+      margin-top: 32px;
+    }
+    .btn-cta:hover { opacity: .9; transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: var(--white);
+      font-weight: 600; font-size: 15px;
+      padding: 13px 32px; border-radius: 100px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.25);
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      margin-top: 32px;
+    }
+    .btn-outline:hover { border-color: var(--green); background: rgba(193,255,114,.07); }
+
+    /* ── Tag list ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .tag {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 100px;
+      padding: 5px 16px;
+      font-size: 13px; color: rgba(255,255,255,.7);
+    }
+
+    /* ── Slide-specific ── */
+
+    /* S1 Cover */
+    #s1 { flex-direction: column; text-align: center; justify-content: center; }
+    #s1 h1 { max-width: 800px; }
+    #s1 p { max-width: 560px; margin: 24px auto 0; }
+
+    /* S2 Problem */
+    #s2 .cols-2 { max-width: 1100px; }
+
+    /* S3 Drone */
+    #s3 { padding: 0; }
+    #s3 .content { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+    #s3 .left { padding: 80px; display: flex; flex-direction: column; justify-content: center; }
+    #s3 .right {
+      background-image: url(../assets/images/portfolio/portfolio-img-2.jpg);
+      background-size: cover; background-position: center;
+      position: relative;
+    }
+    #s3 .right::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--dark2) 0%, transparent 40%);
+    }
+
+    /* S4 Photography & Video */
+    #s4 { flex-direction: column; }
+    #s4 h2 { margin-bottom: 12px; }
+    #s4 .cols-2 { margin-top: 48px; max-width: 1100px; }
+
+    /* S5 Social Agent */
+    #s5 .cols-2 { max-width: 1100px; }
+    #s5 .phone-mock {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 24px;
+      padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .chat-bubble {
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.4;
+      max-width: 85%;
+    }
+    .chat-in {
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.8);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .chat-out {
+      background: var(--green);
+      color: var(--dark);
+      font-weight: 600;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-label {
+      font-size: 11px;
+      color: var(--gray);
+      text-align: center;
+      margin: 4px 0;
+    }
+
+    /* S6 Proof */
+    #s6 .cols-2 { max-width: 1100px; align-items: start; }
+
+    /* S7 Services overview */
+    #s7 { flex-direction: column; }
+    #s7 h2 { margin-bottom: 40px; }
+
+    /* S8 CTA */
+    #s8 { flex-direction: column; text-align: center; }
+    #s8 h2 { max-width: 700px; }
+    #s8 p  { max-width: 480px; margin: 20px auto 0; }
+    #s8 .btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 900px) {
+      .slide { padding: 40px 32px; }
+      .cols-2, .cols-3 { grid-template-columns: 1fr; gap: 32px; }
+      #s3 .content { grid-template-columns: 1fr; }
+      #s3 .right { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="watermark">Digital Monk</div>
+<div class="counter"><span id="cur">1</span> / <span id="tot"></span></div>
+
+<div class="deck" id="deck">
+
+  <!-- S1 — Cover -->
+  <div class="slide active" id="s1">
+    <div class="label">Digital Monk × Real Estate</div>
+    <h1>Content that<br><span class="accent">sells properties.</span></h1>
+    <p>Drone footage, professional photography, video tours, and AI-powered social agents — everything a real estate team needs to stand out and close faster.</p>
+  </div>
+
+  <!-- S2 — The Reality -->
+  <div class="slide" id="s2">
+    <div class="content">
+      <div class="cols cols-2">
+        <div>
+          <div class="label">The challenge</div>
+          <h2>Buyers decide<br>in <span class="accent">seconds.</span></h2>
+          <div class="line"></div>
+          <p>Online listings are crowded. A buyer scrolls past dozens of properties before pausing — and they pause for visuals. Poor photography, no video, and slow social response are the three fastest ways to lose a qualified lead.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="card">
+            <div style="font-size:36px; font-weight:800; color:var(--green); line-height:1;">87%</div>
+            <p style="margin-top:8px; font-size:14px;">of buyers start their property search online before contacting an agent.</p>
+          </div>
+          <div class="card">
+            <div style="font-size:36px; font-weight:800; color:var(--green); line-height:1;">3 sec</div>
+            <p style="margin-top:8px; font-size:14px;">Average time a buyer spends on a listing with no quality visuals before moving on.</p>
+          </div>
+          <div class="card">
+            <div style="font-size:36px; font-weight:800; color:var(--green); line-height:1;">78%</div>
+            <p style="margin-top:8px; font-size:14px;">of leads on social media go cold if not responded to within 5 minutes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 — Drone -->
+  <div class="slide" id="s3">
+    <div class="content">
+      <div class="left">
+        <div class="label">Service 01</div>
+        <h2>Aerial &<br><span class="accent">Drone Footage</span></h2>
+        <div class="line"></div>
+        <p>Cinematic drone shots that show the full scope of a property — lot size, surroundings, access, and neighbourhood context. Footage that a ground-level camera simply cannot replicate.</p>
+        <div class="tags">
+          <span class="tag">4K footage</span>
+          <span class="tag">Property flyovers</span>
+          <span class="tag">Neighbourhood context</span>
+          <span class="tag">Development shots</span>
+        </div>
+      </div>
+      <div class="right"></div>
+    </div>
+  </div>
+
+  <!-- S4 — Photography & Video -->
+  <div class="slide" id="s4">
+    <div class="content" style="width:100%;">
+      <div class="label">Services 02 & 03</div>
+      <h2>Photography &<br><span class="accent">Video Production</span></h2>
+      <div class="cols cols-2" style="margin-top:40px; max-width:1100px;">
+        <div class="card">
+          <div class="icon-circle">📷</div>
+          <h3 style="font-size:22px; margin-bottom:12px;">Listing Photography</h3>
+          <p>Professionally lit interior and exterior shots optimised for portals, social media, and printed materials. The first impression that stops the scroll.</p>
+          <div class="tags" style="margin-top:16px;">
+            <span class="tag">Interior</span>
+            <span class="tag">Exterior</span>
+            <span class="tag">Twilight shots</span>
+            <span class="tag">Virtual staging ready</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="icon-circle">🎬</div>
+          <h3 style="font-size:22px; margin-bottom:12px;">Property Video Tours</h3>
+          <p>Cinematic walkthroughs that let buyers experience the property before visiting. Listings with video receive 4× more inquiries and sell 31% faster on average.</p>
+          <div class="tags" style="margin-top:16px;">
+            <span class="tag">Walkthrough tours</span>
+            <span class="tag">Agent spotlight</span>
+            <span class="tag">Development promos</span>
+            <span class="tag">Social cuts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5 — Social Agent -->
+  <div class="slide" id="s5">
+    <div class="content">
+      <div class="cols cols-2">
+        <div>
+          <div class="label">Service 04</div>
+          <h2>Never miss<br>a <span class="accent">lead again.</span></h2>
+          <div class="line"></div>
+          <p>An AI conversational agent handles every inquiry on Instagram and Facebook — instantly, 24/7. It qualifies leads, answers FAQs, and books appointments while your team focuses on closing.</p>
+          <div class="tags" style="margin-top:24px;">
+            <span class="tag">Instant response</span>
+            <span class="tag">Lead qualification</span>
+            <span class="tag">Appointment booking</span>
+            <span class="tag">Instagram & Facebook</span>
+            <span class="tag">24 / 7</span>
+          </div>
+        </div>
+        <div class="phone-mock">
+          <div class="chat-label">Instagram DM · just now</div>
+          <div class="chat-bubble chat-in">Hi! I saw the listing on Paseo del Sol — is the 3-bed still available?</div>
+          <div class="chat-bubble chat-out">Yes, it's available! It's a 3-bed / 2-bath, 185 m², priced at $4.2M MXN. Would you like to schedule a visit this week?</div>
+          <div class="chat-bubble chat-in">Yes please! Saturday morning works for me.</div>
+          <div class="chat-bubble chat-out">Perfect. I've booked you for Saturday at 10:00 AM. You'll receive a confirmation shortly. See you then! 🏡</div>
+          <div class="chat-label">Lead captured · appointment booked · 47 seconds</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6 — Proof -->
+  <div class="slide" id="s6">
+    <div class="content">
+      <div class="cols cols-2">
+        <div>
+          <div class="label">Proof</div>
+          <h2>Results speak<br>for <span class="accent">themselves.</span></h2>
+          <div class="line"></div>
+          <div class="quote" style="margin-top:32px;">
+            <blockquote>"The drone footage they captured made our listings stand out immediately. Properties that sat for weeks sold within days after the video went live."</blockquote>
+            <div class="quote-person">
+              <img src="../assets/images/testimonial/testimonial-aland.png" alt="Aland Drake">
+              <div>
+                <div class="name">Aland Drake</div>
+                <div class="role">Real Estate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="card-green">
+            <div class="num">4×</div>
+            <p style="margin-top:8px; font-size:15px;">more inquiries on listings that include professional video vs. photos only.</p>
+          </div>
+          <div class="card" style="display:flex; gap:20px; align-items:center;">
+            <div style="font-size:40px; font-weight:800; color:var(--green); white-space:nowrap;">31%</div>
+            <p style="font-size:14px;">faster average sale time for properties with drone + video content.</p>
+          </div>
+          <div class="card" style="display:flex; gap:20px; align-items:center;">
+            <div style="font-size:40px; font-weight:800; color:var(--green); white-space:nowrap;">< 1 min</div>
+            <p style="font-size:14px;">average response time with the social AI agent — vs. hours with manual replies.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7 — All services -->
+  <div class="slide" id="s7">
+    <div class="content" style="width:100%;">
+      <div class="label">Everything in one place</div>
+      <h2>The full <span class="accent">Digital Monk</span> stack<br>for real estate.</h2>
+      <div class="cols cols-3" style="margin-top:40px;">
+        <div class="card">
+          <div class="icon-circle">🚁</div>
+          <h3 style="font-size:18px; margin-bottom:8px;">Aerial & Drone</h3>
+          <p style="font-size:14px;">Cinematic flyovers, neighbourhood context, development documentation.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">📷</div>
+          <h3 style="font-size:18px; margin-bottom:8px;">Photography</h3>
+          <p style="font-size:14px;">Interior, exterior, twilight. Optimised for portals and social.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">🎬</div>
+          <h3 style="font-size:18px; margin-bottom:8px;">Video Production</h3>
+          <p style="font-size:14px;">Property tours, agent spotlights, brand and development promos.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">🤖</div>
+          <h3 style="font-size:18px; margin-bottom:8px;">Social AI Agent</h3>
+          <p style="font-size:14px;">Instant 24/7 response on Instagram and Facebook. Qualifies, answers, books.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">🎵</div>
+          <h3 style="font-size:18px; margin-bottom:8px;">Curated Playlists</h3>
+          <p style="font-size:14px;">AI-curated music for open houses and offices. The right vibe closes deals.</p>
+        </div>
+        <div class="card" style="background:rgba(193,255,114,.07); border-color:rgba(193,255,114,.25);">
+          <div style="font-size:36px; font-weight:800; color:var(--green);">+50</div>
+          <p style="font-size:14px; margin-top:8px;">brands served across Mexico and internationally. One team. Full service.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S8 — CTA -->
+  <div class="slide" id="s8">
+    <div class="label">Let's work together</div>
+    <h2>Ready to make your<br>listings <span class="accent">impossible to ignore?</span></h2>
+    <p>Let's talk about your portfolio and put together a content strategy that moves properties faster.</p>
+    <div class="btns">
+      <a href="https://wa.me/529514837121" target="_blank" class="btn-cta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.116.549 4.107 1.51 5.842L.057 23.25a.75.75 0 0 0 .918.919l5.451-1.453A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.694 9.694 0 0 1-4.946-1.352l-.354-.211-3.674.98.997-3.592-.232-.37A9.694 9.694 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+        WhatsApp
+      </a>
+      <a href="mailto:info@digitalmonk.mx" class="btn-outline">
+        info@digitalmonk.mx
+      </a>
+    </div>
+    <p style="margin-top:40px; font-size:13px; color:rgba(255,255,255,.25);">www.digitalmonk.mx</p>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<button class="arrow prev" id="prev">&#8592;</button>
+<button class="arrow next" id="next">&#8594;</button>
+<div class="dots" id="dots"></div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsEl = document.getElementById('dots');
+  const curEl  = document.getElementById('cur');
+  const totEl  = document.getElementById('tot');
+  let current  = 0;
+
+  totEl.textContent = slides.length;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    if (n === current) return;
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    setTimeout(() => slides[current < n ? current : n + (n < current ? 0 : 0)].classList.remove('exit'), 500);
+
+    const prev = current;
+    current = Math.max(0, Math.min(slides.length - 1, n));
+
+    setTimeout(() => slides[prev].classList.remove('exit'), 480);
+    slides[current].classList.add('active');
+
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    curEl.textContent = current + 1;
+  }
+
+  document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('next').addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft')                    { e.preventDefault(); goTo(current - 1); }
+  });
+
+  // Touch swipe
+  let tx = 0;
+  document.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
+  document.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
+  }, { passive: true });
+</script>
+</body>
+</html>
