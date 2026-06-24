@@ -110,24 +110,20 @@
 
               <div class="mb-5">
                 <div class="d-flex align-items-center justify-content-between gap-3 mb-2">
-                  <h2 class="mb-0 fs-5 text-dark fw-bold">Payment details</h2>
-                  <span id="sandbox-badge" class="badge fw-semibold fs-9" style="display:none;background:#fff3cd;color:#7a5c00">Test mode</span>
+                  <h2 class="mb-0 fs-5 text-dark fw-bold">Datos de pago</h2>
+                  <span id="sandbox-badge" class="badge fw-semibold fs-9" style="display:none;background:#fff3cd;color:#7a5c00">Modo de prueba</span>
                 </div>
                 <p class="mb-0 text-dark text-opacity-50 fs-8">
-                  Your card number is encrypted directly with OpenPay and <strong class="text-dark text-opacity-70">never reaches our servers</strong>.
+                  Tu número de tarjeta se cifra directamente con OpenPay y <strong class="text-dark text-opacity-70">nunca llega a nuestros servidores</strong>.
                 </p>
               </div>
 
               <form id="checkout-form" novalidate>
-                <!-- Required by OpenPay wizard -->
+                <!-- Required by OpenPay wizard — hidden, not visible to user -->
                 <input type="hidden" name="token_id" id="token_id">
                 <input type="hidden" name="use_card_points" id="use_card_points" value="false">
-
-                <!-- Accepted card types -->
-                <div class="d-flex align-items-center gap-3 mb-4">
-                  <div class="credit"><span class="badge bg-light text-dark border fs-9 fw-semibold">Crédito</span></div>
-                  <div class="debit"><span class="badge bg-light text-dark border fs-9 fw-semibold">Débito</span></div>
-                </div>
+                <div class="credit" style="display:none"></div>
+                <div class="debit"  style="display:none"></div>
 
                 <div class="row g-3">
 
@@ -175,17 +171,21 @@
 
                 </div>
 
-                <!-- OpenPay security badge — openpay-data.v1.min.js injects logo + shield images into these class names -->
-                <div class="openpay mt-4">
-                  <div class="logo">Transacciones realizadas vía:</div>
-                  <div class="shield">Tus pagos se realizan de forma segura con encriptación de 256 bits</div>
-                </div>
-
                 <div id="checkout-alert" class="alert alert-danger mt-4 mb-0 d-none fs-8" role="alert"></div>
 
                 <button id="checkout-btn" class="btn btn-primary w-100 py-3 fw-bold mt-4 fs-7" type="submit" disabled>
                   Suscribirse
                 </button>
+
+                <!-- OpenPay security badge — .openpay/.logo/.shield classes are read by openpay-data.v1.min.js -->
+                <div class="openpay mt-3 d-flex align-items-center justify-content-center gap-2">
+                  <iconify-icon icon="lucide:lock" class="text-dark text-opacity-30 fs-8"></iconify-icon>
+                  <p class="mb-0 text-dark text-opacity-40 fs-9">
+                    <span class="logo">Transacciones vía OpenPay México</span>
+                    <span class="shield d-none">Tus pagos se realizan de forma segura con encriptación de 256 bits</span>
+                    &nbsp;· TLS · 256-bit
+                  </p>
+                </div>
 
               </form>
             </div>
@@ -196,14 +196,14 @@
                 style="width:3.5rem;height:3.5rem">
                 <iconify-icon icon="lucide:check" class="fs-5 text-dark fw-bold"></iconify-icon>
               </div>
-              <h2 class="text-dark fs-4 fw-bold mb-2">Subscription activated!</h2>
+              <h2 class="text-dark fs-4 fw-bold mb-2">¡Suscripción activada!</h2>
               <p class="text-dark text-opacity-60 mb-4">
-                Your membership has been registered. You'll receive a confirmation to your email address.
+                Tu membresía ha sido registrada. Recibirás una confirmación en tu correo electrónico.
               </p>
               <p id="success-ref" class="text-dark text-opacity-40 fs-8 mb-1"></p>
               <p id="success-charge-date" class="text-dark text-opacity-40 fs-8 mb-4"></p>
               <button class="btn btn-outline-dark px-5 py-2 fw-semibold" id="subscribe-again-btn">
-                Register another subscription
+                Registrar otra suscripción
               </button>
             </div>
 
@@ -524,12 +524,12 @@
         var successEl = document.getElementById('success-state');
         successEl.classList.remove('d-none');
         if (data.subscription_id) {
-          document.getElementById('success-ref').textContent = 'Reference: ' + data.subscription_id;
+          document.getElementById('success-ref').textContent = 'Referencia: ' + data.subscription_id;
         }
         if (data.charge_date) {
           var d = new Date(data.charge_date + 'T12:00:00');
-          var fmt = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-          document.getElementById('success-charge-date').textContent = 'First charge: ' + fmt;
+          var fmt = d.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+          document.getElementById('success-charge-date').textContent = 'Primer cobro: ' + fmt;
         }
 
       } catch (err) {
@@ -570,9 +570,9 @@
       if (!btn) return;
       if (monto) {
         var label = PERIOD_LABELS[periodo] || (periodo ? decodeURIComponent(periodo) : '');
-        btn.textContent = 'Subscribe · ' + formatMXN(monto) + (label ? ' / ' + label : '');
+        btn.textContent = 'Suscribirse · ' + formatMXN(monto) + (label ? ' / ' + label : '');
       } else {
-        btn.textContent = 'Subscribe';
+        btn.textContent = 'Suscribirse';
       }
     }
     function showAlert(msg) {
