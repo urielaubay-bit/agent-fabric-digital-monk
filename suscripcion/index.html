@@ -119,56 +119,74 @@
               </div>
 
               <form id="checkout-form" novalidate>
+                <!-- Required by OpenPay wizard -->
+                <input type="hidden" name="token_id" id="token_id">
+                <input type="hidden" name="use_card_points" id="use_card_points" value="false">
+
+                <!-- Accepted card types -->
+                <div class="d-flex align-items-center gap-3 mb-4">
+                  <div class="credit"><span class="badge bg-light text-dark border fs-9 fw-semibold">Crédito</span></div>
+                  <div class="debit"><span class="badge bg-light text-dark border fs-9 fw-semibold">Débito</span></div>
+                </div>
+
                 <div class="row g-3">
 
                   <div class="col-6">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-name">First name <span class="text-danger" aria-hidden="true">*</span></label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-name">Nombre <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-name" class="form-control checkout-input" type="text"
-                      autocomplete="given-name" placeholder="Ana" required>
+                      autocomplete="off" placeholder="Como aparece en la tarjeta"
+                      data-openpay-card="holder_name" required>
                   </div>
                   <div class="col-6">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-last">Last name</label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-last">Apellido</label>
                     <input id="f-last" class="form-control checkout-input" type="text"
-                      autocomplete="family-name" placeholder="García">
+                      autocomplete="off" placeholder="García">
                   </div>
 
                   <div class="col-12">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-email">Email address <span class="text-danger" aria-hidden="true">*</span></label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-email">Correo electrónico <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-email" class="form-control checkout-input" type="email"
-                      autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+                      autocomplete="off" inputmode="email" placeholder="tu@correo.com" required>
                   </div>
 
                   <div class="col-12">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-card">Card number <span class="text-danger" aria-hidden="true">*</span></label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-card">Número de tarjeta <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-card" class="form-control checkout-input" type="text"
-                      inputmode="numeric" autocomplete="cc-number"
-                      placeholder="0000 0000 0000 0000" required>
+                      inputmode="numeric" autocomplete="off"
+                      placeholder="0000 0000 0000 0000"
+                      data-openpay-card="card_number" required>
                   </div>
 
                   <div class="col-6">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-exp">Expiry (MM/YY) <span class="text-danger" aria-hidden="true">*</span></label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-exp">Vencimiento (MM/AA) <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-exp" class="form-control checkout-input" type="text"
-                      inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" required>
+                      inputmode="numeric" autocomplete="off" placeholder="MM/AA" required>
+                    <!-- Hidden fields read by openpay.js wizard — populated by JS on input -->
+                    <input type="hidden" id="f-exp-month" data-openpay-card="expiration_month">
+                    <input type="hidden" id="f-exp-year"  data-openpay-card="expiration_year">
                   </div>
                   <div class="col-6">
-                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-cvv">CVV <span class="text-danger" aria-hidden="true">*</span></label>
+                    <label class="d-block fw-semibold fs-8 text-dark mb-1" for="f-cvv">Código de seguridad <span class="text-danger" aria-hidden="true">*</span></label>
                     <input id="f-cvv" class="form-control checkout-input" type="text"
-                      inputmode="numeric" autocomplete="cc-csc"
-                      placeholder="123" maxlength="4" required>
+                      inputmode="numeric" autocomplete="off"
+                      placeholder="3 dígitos" maxlength="4"
+                      data-openpay-card="cvv2" required>
                   </div>
 
+                </div>
+
+                <!-- OpenPay security badge — openpay-data.v1.min.js injects logo + shield images into these class names -->
+                <div class="openpay mt-4">
+                  <div class="logo">Transacciones realizadas vía:</div>
+                  <div class="shield">Tus pagos se realizan de forma segura con encriptación de 256 bits</div>
                 </div>
 
                 <div id="checkout-alert" class="alert alert-danger mt-4 mb-0 d-none fs-8" role="alert"></div>
 
                 <button id="checkout-btn" class="btn btn-primary w-100 py-3 fw-bold mt-4 fs-7" type="submit" disabled>
-                  Subscribe
+                  Suscribirse
                 </button>
 
-                <p class="text-center text-dark text-opacity-40 fs-9 mt-3 mb-0">
-                  <iconify-icon icon="lucide:lock" style="vertical-align:-.1em" class="me-1"></iconify-icon>
-                  Secure payment · TLS encryption · Processed by OpenPay México
-                </p>
               </form>
             </div>
 
@@ -360,7 +378,7 @@
         window.OpenPay.setId(MERCHANT_ID);
         window.OpenPay.setApiKey(PUBLIC_KEY);
         window.OpenPay.setSandboxMode(SANDBOX);
-        deviceSessionId = window.OpenPay.deviceData.setup();
+        deviceSessionId = window.OpenPay.deviceData.setup('checkout-form', 'deviceIdHiddenFieldName');
       } catch (e) {
         showAlert('Could not initialize the payment processor. Please reload the page.');
       }
@@ -402,7 +420,13 @@
       var cvvEl  = document.getElementById('f-cvv');
 
       cardEl.addEventListener('input', function () { this.value = fmtCard(this.value); checkFormReady(); });
-      expEl.addEventListener('input',  function () { this.value = fmtExp(this.value);  checkFormReady(); });
+      expEl.addEventListener('input',  function () {
+        this.value = fmtExp(this.value);
+        var parsed = parseExp(this.value);
+        document.getElementById('f-exp-month').value = parsed ? parsed.month : '';
+        document.getElementById('f-exp-year').value  = parsed ? parsed.year  : '';
+        checkFormReady();
+      });
       cvvEl.addEventListener('input',  function () { this.value = this.value.replace(/\D/g, '').slice(0, 4); checkFormReady(); });
 
       document.getElementById('f-name').addEventListener('input',  checkFormReady);
